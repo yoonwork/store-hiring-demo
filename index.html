@@ -9,239 +9,328 @@
 <style>
 :root{
   color-scheme: light;
-  --brand:#2457F5; --brand-hover:#1B45D6; --brand-press:#1638B0; --brand-text:#1B45D6;
-  --brand-tint:#EEF3FF; --brand-tint-2:#D9E4FF; --ring:0 0 0 3px rgba(36,87,245,.25); --on-brand:#FFF;
-  --bg:#F2F4F7; --card:#FFF; --soft:#F7F8FA; --track:#ECEFF3; --line:#E5E8EB; --line-2:#EBEEF2;
-  --ink:#191F28; --ink-2:#4E5968; --mut:#636D7B; --mut-2:#9AA3AE;
-  --ok:#127A4F; --ok-bg:#E3F6ED; --ok-dot:#1FA971;
-  --warn:#7A5600; --warn-bg:#FFF3D4; --warn-dot:#F2B01E;
-  --bad:#BF2930; --bad-bg:#FFE3E4; --bad-dot:#E5484D;
-  --info:#175CD3; --info-bg:#EAF2FF; --info-dot:#2E7CF6;
-  --neu:#4E5968; --neu-bg:#F0F2F5; --neu-dot:#8B95A1;
+  --navy:#0F1C3F; --navy-2:#1C2D5E; --navy-3:#2A3F78;
+  --brand:#2448C6; --brand-hover:#1D3BA6; --brand-tint:#E9EEFC; --brand-tint-2:#D3DDFA;
+  --ring:0 0 0 3px rgba(36,72,198,.28);
+  --bg:#F1F3F8; --card:#FFF; --soft:#F6F7FB; --track:#E8EBF2; --line:#E3E7EF; --line-2:#ECEFF5;
+  --ink:#141B2D; --ink-2:#4A5469; --mut:#667085; --mut-2:#A0A8B8;
+  --ok:#11734A; --ok-bg:#E2F5EC; --ok-dot:#1FA971;
+  --warn:#7A5600; --warn-bg:#FFF2D1; --warn-dot:#F2B01E;
+  --bad:#C0262D; --bad-bg:#FFE4E5; --bad-dot:#E5484D;
+  --info:#1D47B8; --info-bg:#E9EEFC;
+  --neu:#4A5469; --neu-bg:#EEF0F4;
   --font:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
-  --r-sm:8px; --r-md:12px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
-  --sh-pop:0 2px 6px rgba(16,24,40,.06),0 12px 32px rgba(16,24,40,.12);
+  --r-md:14px; --r-lg:24px; --r-xl:32px; --r-pill:999px;
+  --sh-1:0 1px 2px rgba(15,28,63,.04),0 6px 20px rgba(15,28,63,.06);
+  --sh-2:0 4px 10px rgba(15,28,63,.06),0 20px 48px rgba(15,28,63,.12);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+html,body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer;border:0;background:none}
-:focus-visible{outline:none;box-shadow:var(--ring);border-radius:var(--r-sm)}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+:focus-visible{outline:none;box-shadow:var(--ring)}
+svg{display:block}
+.ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
-/* 상단 데모 띠 */
-.demo-bar{background:var(--ink);color:#fff;font-size:13px;padding:8px 16px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
-.demo-bar b{font-weight:600}
-.demo-bar button{color:#fff;opacity:.8;text-decoration:underline;font-size:13px;min-height:32px}
+/* 데모 띠 */
+.demo-bar{background:var(--navy);color:#DCE3F5;font-size:13px;padding:8px 16px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+.demo-bar b{color:#fff;font-weight:600}
+.demo-bar button{color:#fff;text-decoration:underline;text-underline-offset:3px;font-size:13px;min-height:32px}
 
-/* 레이아웃 */
-.wrap{max-width:1120px;margin:0 auto;padding:16px}
-.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
-.logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:17px}
-.logo i{width:28px;height:28px;border-radius:9px;background:var(--brand);display:grid;place-items:center}
-.logo i svg{width:16px;height:16px}
-.seg{display:flex;background:var(--track);border-radius:var(--r-pill);padding:4px;gap:2px}
-.seg button{height:36px;padding:0 14px;border-radius:var(--r-pill);font-size:14px;color:var(--ink-2);font-weight:500}
-.seg button[aria-pressed="true"]{background:#fff;color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(16,24,40,.08)}
+.wrap{max-width:1160px;margin:0 auto;padding:20px 16px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-.02em}
+.logo i{width:34px;height:34px;border-radius:12px;background:var(--navy);display:grid;place-items:center;color:#fff}
+.seg{display:flex;background:#fff;border-radius:var(--r-pill);padding:5px;gap:4px;box-shadow:var(--sh-1)}
+.seg button{height:38px;padding:0 18px;border-radius:var(--r-pill);font-size:14px;color:var(--mut);font-weight:600}
+.seg button[aria-pressed="true"]{background:var(--navy);color:#fff}
+.who{font-size:13px;color:var(--mut);margin:-8px 0 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.who select{border:1px solid var(--line);border-radius:var(--r-pill);padding:0 14px;background:#fff;font-size:14px;color:var(--ink);height:38px}
 
-.who{font-size:13px;color:var(--mut);margin:-4px 0 16px}
-.who select{border:1px solid var(--line);border-radius:var(--r-sm);padding:4px 8px;background:#fff;font-size:14px;color:var(--ink);min-height:36px}
-
-.card{background:var(--card);border:1px solid var(--line-2);border-radius:var(--r-lg);padding:20px}
-.h1{font-size:24px;font-weight:700;letter-spacing:-.02em;line-height:1.3}
-.h2{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.h1{font-size:24px;font-weight:700;letter-spacing:-.025em;line-height:1.3}
+.h2{font-size:17px;font-weight:700;letter-spacing:-.015em}
 .sub{color:var(--mut);font-size:14px}
 .row{display:flex;align-items:center;gap:8px}
 .sp{flex:1}
 .stack>*+*{margin-top:12px}
-
-.btn{height:48px;padding:0 20px;border-radius:var(--r-pill);font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:15px}
-.btn-p{background:var(--brand);color:#fff}
-.btn-p:hover{background:var(--brand-hover)} .btn-p:active{background:var(--brand-press)}
-.btn-s{background:var(--track);color:var(--ink)}
-.btn-s:hover{background:#E2E6EB}
-.btn-sm{height:36px;padding:0 14px;font-size:14px}
-.btn-block{width:100%}
-.btn[disabled]{opacity:.45;cursor:not-allowed}
-
-.badge{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:var(--r-pill);font-size:12px;font-weight:600;white-space:nowrap}
-.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.9}
-.b-new{background:var(--info-bg);color:var(--info)}
-.b-ing{background:var(--warn-bg);color:var(--warn)}
-.b-part{background:var(--brand-tint);color:var(--brand-text)}
-.b-done{background:var(--ok-bg);color:var(--ok)}
-.b-hold{background:var(--neu-bg);color:var(--neu)}
-.urgent{color:var(--bad);font-weight:600;font-size:12px;display:inline-flex;align-items:center;gap:4px}
-
-.bar{height:8px;background:var(--track);border-radius:var(--r-pill);overflow:hidden}
-.bar i{display:block;height:100%;background:var(--brand);border-radius:var(--r-pill);transition:width .4s}
-.bar.done i{background:var(--ok-dot)}
-
-/* 요청 카드 */
-.req{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line-2);border-radius:var(--r-lg);padding:16px;transition:border-color .15s}
-.req:hover{border-color:#CBD2DB}
-.req .t{font-weight:700;font-size:16px}
-.req .m{font-size:13px;color:var(--mut)}
-.req .cnt{font-weight:700;font-variant-numeric:tabular-nums}
-
-/* 숫자 요약 */
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.kpi{background:#fff;border:1px solid var(--line-2);border-radius:var(--r-lg);padding:16px}
-.kpi .l{font-size:13px;color:var(--mut)}
-.kpi .v{font-size:28px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.3}
-.kpi .v small{font-size:14px;color:var(--mut);font-weight:500;margin-left:2px}
-.kpi.alert .v{color:var(--bad)}
-
-/* 표 */
-.tbl{width:100%;border-collapse:collapse;font-size:14px}
-.tbl th{font-size:12px;color:var(--mut);font-weight:600;text-align:left;padding:10px 12px;background:var(--soft);border-bottom:1px solid var(--line)}
-.tbl td{padding:12px;border-bottom:1px solid var(--line-2);vertical-align:middle}
-.tbl tr.sel td{background:var(--brand-tint)}
-.tbl tbody tr{cursor:pointer}
-.tbl tbody tr:hover td{background:var(--soft)}
-.tbl tbody tr.sel:hover td{background:var(--brand-tint)}
 .num{font-variant-numeric:tabular-nums}
 
-.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.chip{height:36px;padding:0 14px;border-radius:var(--r-pill);border:1px solid var(--line);background:#fff;font-size:14px;color:var(--ink-2)}
-.chip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
-.search{height:36px;border:1px solid var(--line);border-radius:var(--r-pill);padding:0 14px;background:#fff;min-width:180px;font-size:14px}
+.btn{height:48px;padding:0 22px;border-radius:var(--r-pill);font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:15px;white-space:nowrap}
+.btn-n{background:var(--navy);color:#fff} .btn-n:hover{background:var(--navy-2)}
+.btn-b{background:var(--brand);color:#fff} .btn-b:hover{background:var(--brand-hover)}
+.btn-w{background:#fff;color:var(--navy)}
+.btn-s{background:var(--soft);color:var(--ink);border:1px solid var(--line)}
+.btn-sm{height:38px;padding:0 16px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+
+.badge{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 11px;border-radius:var(--r-pill);font-size:12px;font-weight:600;white-space:nowrap}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.b-new{background:var(--info-bg);color:var(--info)}
+.b-ing{background:var(--warn-bg);color:var(--warn)}
+.b-part{background:#E6F0FF;color:#1756B8}
+.b-done{background:var(--ok-bg);color:var(--ok)}
+.b-hold{background:var(--neu-bg);color:var(--neu)}
+.urgent{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:var(--r-pill);background:var(--bad-bg);color:var(--bad);font-size:11px;font-weight:700}
+
+.bar{height:6px;background:var(--track);border-radius:var(--r-pill);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--brand);border-radius:var(--r-pill);transition:width .5s}
+.bar.done i{background:var(--ok-dot)}
+
+/* ---------- 휴대폰 ---------- */
+.phone-area{display:grid;grid-template-columns:400px 1fr;gap:40px;align-items:start}
+.phone{width:400px;height:820px;background:var(--bg);border-radius:52px;border:1px solid #DDE2EC;box-shadow:var(--sh-2);overflow:hidden;position:relative;display:flex;flex-direction:column}
+.island{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:112px;height:32px;border-radius:20px;background:#0B0F1A;z-index:5}
+.ph-body{flex:1;overflow-y:auto;padding:58px 20px 112px;scrollbar-width:none}
+.ph-body::-webkit-scrollbar{display:none}
+.ph-body.flush{padding:0 0 112px}
+
+.ph-tab{position:absolute;left:20px;right:20px;bottom:20px;background:#fff;border-radius:var(--r-pill);box-shadow:var(--sh-2);display:flex;padding:7px;gap:4px;z-index:6}
+.ph-tab button{height:50px;min-width:50px;flex:1;border-radius:var(--r-pill);color:var(--mut);display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:600;position:relative}
+.ph-tab button .lbl{display:none}
+.ph-tab button[aria-current="page"]{background:var(--navy);color:#fff;flex:1.7}
+.ph-tab button[aria-current="page"] .lbl{display:inline}
+.ph-tab .dot{position:absolute;top:10px;right:calc(50% - 16px);min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--bad-dot);color:#fff;font-size:10px;font-weight:700;display:grid;place-items:center;border:2px solid #fff}
+.ph-tab button[aria-current="page"] .dot{display:none}
+
+/* 홈 */
+.hello{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(180deg,#DDE5FB,#C7D3F6);display:grid;place-items:center;color:var(--navy);font-weight:700;font-size:16px;flex:none;border:2px solid #fff;box-shadow:var(--sh-1)}
+.hello .s{font-size:13px;color:var(--mut)}
+.hello .n{font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.25}
+.circle-btn{width:48px;height:48px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:var(--sh-1);position:relative;color:var(--ink)}
+.circle-btn .dot{position:absolute;top:8px;right:8px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:var(--bad-dot);color:#fff;font-size:10px;font-weight:700;display:grid;place-items:center;border:2px solid #fff}
+
+.hero{background:var(--navy);color:#fff;border-radius:var(--r-lg);padding:22px;position:relative;overflow:hidden}
+.hero .l{font-size:13px;color:#B9C4E4}
+.hero .big{font-size:52px;font-weight:700;letter-spacing:-.03em;line-height:1.05;margin:6px 0 4px}
+.hero .big small{font-size:20px;font-weight:600;margin-left:4px}
+.hero .meta{font-size:13px;color:#C9D2EC}
+.hero .art{position:absolute;right:-6px;top:14px;width:150px;height:150px;opacity:.95}
+.hero .btn{margin-top:16px;height:44px;padding:0 18px;font-size:14px}
+
+.sec-h{display:flex;align-items:center;justify-content:space-between;margin:24px 0 12px}
+.sec-h .h2{font-size:16px}
+.sec-h a,.sec-h button.link{font-size:14px;color:var(--brand);font-weight:600}
+
+.quick{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;background:#fff;border-radius:var(--r-lg);padding:16px 8px;box-shadow:var(--sh-1)}
+.quick button{display:flex;flex-direction:column;align-items:center;gap:8px;font-size:12px;color:var(--ink-2);font-weight:500;padding:4px 0}
+.quick button span.c{width:52px;height:52px;border-radius:50%;background:var(--soft);border:1px solid var(--line-2);display:grid;place-items:center;color:var(--navy);transition:.15s}
+.quick button:hover span.c{background:var(--brand-tint);border-color:var(--brand-tint-2)}
+.quick .ico{width:22px;height:22px}
+
+.pills{display:inline-flex;background:#fff;border-radius:var(--r-pill);padding:4px;box-shadow:var(--sh-1)}
+.pills button{height:38px;padding:0 16px;border-radius:var(--r-pill);font-size:14px;font-weight:600;color:var(--mut)}
+.pills button[aria-pressed="true"]{background:var(--brand);color:#fff}
+
+.req{display:block;width:100%;text-align:left;background:#fff;border-radius:var(--r-lg);padding:18px;box-shadow:var(--sh-1);transition:transform .15s,box-shadow .15s}
+.req:hover{box-shadow:var(--sh-2)}
+.req .top-r{display:flex;align-items:center;gap:12px}
+.role-ic{width:44px;height:44px;border-radius:50%;background:var(--brand-tint);color:var(--brand);display:grid;place-items:center;flex:none}
+.req .t{font-weight:700;font-size:16px;letter-spacing:-.01em}
+.req .facts{display:flex;flex-wrap:wrap;gap:6px 14px;margin:14px 0 12px;font-size:13px;color:var(--ink-2)}
+.req .facts span{display:inline-flex;align-items:center;gap:5px}
+.req .facts .ico{width:15px;height:15px;color:var(--mut)}
+.req .cnt{font-weight:700;font-size:15px}
+
+/* 상세·작성 머리 */
+.navy-head{background:var(--navy);color:#fff;padding:58px 20px 64px;border-radius:0 0 var(--r-xl) var(--r-xl)}
+.navy-head .bar-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.glass{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.12);display:grid;place-items:center;color:#fff}
+.navy-head .k{font-size:13px;color:#B9C4E4}
+.navy-head .h1{color:#fff;font-size:26px}
+.navy-head .h1 em{font-style:normal;color:#9DB3F2}
+.lift{margin:-40px 16px 0;position:relative}
+.card{background:#fff;border-radius:var(--r-lg);padding:20px;box-shadow:var(--sh-1)}
+.facts4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}
+.facts4 div{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;color:var(--mut)}
+.facts4 b{color:var(--ink);font-size:13px;font-weight:600;line-height:1.3}
+.facts4 .ico{width:22px;height:22px;color:var(--navy)}
+.in-pad{padding:0 16px}
+
+.worker{display:flex;align-items:center;gap:12px;padding:14px;background:#fff;border-radius:var(--r-md);box-shadow:var(--sh-1)}
+.worker .avatar{width:40px;height:40px;font-size:14px;border-width:0;box-shadow:none}
+
+.tl{position:relative;list-style:none;padding-left:28px}
+.tl::before{content:"";position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:var(--line)}
+.tl li{position:relative;padding-bottom:14px;font-size:14px}
+.tl li:last-child{padding-bottom:0}
+.tl li::before{content:"";position:absolute;left:-28px;top:4px;width:16px;height:16px;border-radius:50%;background:#fff;border:4px solid var(--brand-tint-2)}
+.tl li:first-child::before{border-color:var(--brand)}
+.tl li .w{color:var(--mut);font-size:12px}
 
 /* 폼 */
-label.f{display:block}
-label.f>span{display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:6px}
-.in{width:100%;height:48px;border:1px solid var(--line);border-radius:var(--r-md);padding:0 14px;background:#fff;font-size:15px}
-textarea.in{height:88px;padding:12px 14px;resize:vertical}
-.in:focus{border-color:var(--brand);box-shadow:var(--ring);outline:none}
+.fl{font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:8px;display:block}
 .opts{display:flex;flex-wrap:wrap;gap:8px}
-.opt{height:40px;padding:0 14px;border-radius:var(--r-pill);border:1px solid var(--line);background:#fff;font-size:14px}
-.opt[aria-pressed="true"]{border-color:var(--brand);background:var(--brand-tint);color:var(--brand-text);font-weight:600}
+.opt{height:42px;padding:0 16px;border-radius:var(--r-pill);background:var(--soft);border:1px solid var(--line-2);font-size:14px;font-weight:500;color:var(--ink-2)}
+.opt[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff;font-weight:600}
 .days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
 .days .opt{padding:0;height:44px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.stepper{display:flex;align-items:center;border:1px solid var(--line);border-radius:var(--r-md);height:48px;overflow:hidden;background:#fff}
-.stepper button{width:48px;height:100%;font-size:20px;color:var(--ink-2)}
-.stepper output{flex:1;text-align:center;font-weight:700;font-size:17px}
+.in{width:100%;height:50px;border:1px solid var(--line);border-radius:var(--r-md);padding:0 16px;background:var(--soft);font-size:15px}
+textarea.in{height:92px;padding:14px 16px;resize:vertical}
+.in:focus{border-color:var(--brand);background:#fff;box-shadow:var(--ring);outline:none}
+.stepper{display:flex;align-items:center;background:var(--soft);border:1px solid var(--line);border-radius:var(--r-pill);height:50px;padding:4px}
+.stepper button{width:42px;height:42px;border-radius:50%;background:#fff;box-shadow:var(--sh-1);font-size:20px;color:var(--navy);display:grid;place-items:center}
+.stepper output{flex:1;text-align:center;font-weight:700;font-size:18px}
+.switch{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bad-bg);border-radius:var(--r-md);cursor:pointer}
+.switch input{width:22px;height:22px;accent-color:var(--bad)}
 .err{color:var(--bad);font-size:13px;margin-top:6px}
+.cta{display:flex;align-items:center;justify-content:space-between;width:100%;height:64px;padding:0 10px 0 22px;border-radius:22px;background:var(--navy);color:#fff;font-size:16px;font-weight:600}
+.cta .go{width:44px;height:44px;border-radius:50%;background:#fff;color:var(--navy);display:grid;place-items:center}
+.cta small{display:block;font-size:12px;font-weight:500;color:#B9C4E4}
 
-/* 타임라인 */
-.tl{position:relative;padding-left:24px}
-.tl::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:var(--line)}
-.tl li{list-style:none;position:relative;padding-bottom:12px;font-size:14px}
-.tl li::before{content:"";position:absolute;left:-24px;top:6px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--brand)}
-.tl li .w{color:var(--mut);font-size:12px}
+.noti{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:#fff;border-radius:var(--r-lg);padding:16px;box-shadow:var(--sh-1)}
+.noti .role-ic{width:40px;height:40px}
+.noti.unread{outline:2px solid var(--brand-tint-2)}
+.empty{color:var(--mut);text-align:center;padding:32px 12px;font-size:14px}
 
-.worker{display:flex;align-items:center;gap:12px;padding:12px;background:var(--soft);border-radius:var(--r-md)}
-.av{width:36px;height:36px;border-radius:50%;background:var(--brand-tint-2);color:var(--brand-text);display:grid;place-items:center;font-weight:700;font-size:14px;flex:none}
+/* 옆 설명 */
+.side .card+.card{margin-top:16px}
+.steps{list-style:none;margin-top:12px}
+.steps li{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line-2);font-size:14px;color:var(--ink-2)}
+.steps li:last-child{border:0}
+.steps li i{flex:none;width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-style:normal;font-size:12px;font-weight:700;display:grid;place-items:center}
+.steps strong{color:var(--ink)}
 
-/* 휴대폰 틀 (매장 화면) */
-.phone-area{display:grid;grid-template-columns:390px 1fr;gap:32px;align-items:start}
-.phone{width:390px;background:#fff;border-radius:40px;border:10px solid #111;overflow:hidden;height:720px;display:flex;flex-direction:column;position:relative;box-shadow:var(--sh-pop)}
-.ph-status{height:28px;display:flex;justify-content:space-between;align-items:center;padding:0 22px;font-size:12px;font-weight:600;background:var(--bg)}
-.ph-body{flex:1;overflow-y:auto;background:var(--bg);padding:12px 16px 96px}
-.ph-tab{position:absolute;left:12px;right:12px;bottom:12px;background:#fff;border-radius:var(--r-pill);box-shadow:var(--sh-pop);display:flex;padding:6px}
-.ph-tab button{flex:1;height:48px;border-radius:var(--r-pill);font-size:12px;color:var(--mut);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-weight:500}
-.ph-tab button svg{width:20px;height:20px}
-.ph-tab button[aria-current="page"]{color:var(--brand-text);background:var(--brand-tint);font-weight:700}
-.ph-head{display:flex;align-items:center;gap:8px;padding:8px 0 12px}
-.back{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;margin-left:-8px}
-.back svg{width:22px;height:22px}
+/* ---------- 담당자 화면 ---------- */
+.a-head{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.kpis{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:16px}
+.kpi{background:#fff;border-radius:var(--r-lg);padding:20px;box-shadow:var(--sh-1);display:flex;flex-direction:column;gap:2px}
+.kpi .l{font-size:13px;color:var(--mut)}
+.kpi .v{font-size:36px;font-weight:700;letter-spacing:-.03em;line-height:1.15}
+.kpi .v small{font-size:15px;color:var(--mut);font-weight:600;margin-left:3px}
+.kpi.navy{background:var(--navy);color:#fff}
+.kpi.navy .l{color:#B9C4E4} .kpi.navy .v small{color:#B9C4E4}
+.kpi.red .v{color:var(--bad)}
+.admin{display:grid;grid-template-columns:1fr 400px;gap:16px;align-items:start;margin-top:16px}
+.list-card{background:#fff;border-radius:var(--r-lg);box-shadow:var(--sh-1);overflow:hidden}
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip{height:38px;padding:0 16px;border-radius:var(--r-pill);background:var(--soft);border:1px solid var(--line-2);font-size:14px;font-weight:500;color:var(--ink-2)}
+.chip[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy);font-weight:600}
+.search{display:flex;align-items:center;gap:8px;height:42px;border-radius:var(--r-pill);background:var(--soft);border:1px solid var(--line-2);padding:0 16px;color:var(--mut);min-width:220px}
+.search input{border:0;background:none;outline:none;font-size:14px;color:var(--ink);width:100%}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{font-size:12px;color:var(--mut);font-weight:600;text-align:left;padding:10px 16px;border-bottom:1px solid var(--line-2);background:var(--soft)}
+.tbl td{padding:14px 16px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+.tbl tbody tr{cursor:pointer}
+.tbl tbody tr:hover td{background:#F8F9FC}
+.tbl tr.sel td{background:var(--brand-tint)}
+.tbl tr.sel td:first-child{box-shadow:inset 3px 0 0 var(--brand)}
+.panel{position:sticky;top:16px;background:#fff;border-radius:var(--r-lg);box-shadow:var(--sh-1);overflow:hidden}
+.panel .navy-head{padding:22px 22px 26px;border-radius:0}
+.panel .navy-head .h1{font-size:22px}
+.panel .pb{padding:20px 22px 22px}
+.panel .pb section+section{border-top:1px solid var(--line-2);margin-top:18px;padding-top:18px}
 
-.side-note .card+.card{margin-top:12px}
-.note-list li{list-style:none;padding:10px 0;border-bottom:1px solid var(--line-2);font-size:14px;display:flex;gap:10px}
-.note-list li:last-child{border:0}
-.note-list li b{flex:none;width:22px;height:22px;border-radius:50%;background:var(--brand-tint);color:var(--brand-text);font-size:12px;display:grid;place-items:center}
-
-/* 담당자 화면 */
-.admin{display:grid;grid-template-columns:1fr 380px;gap:16px;align-items:start}
-.panel{position:sticky;top:16px}
-.empty{color:var(--mut);text-align:center;padding:40px 12px;font-size:14px}
-
-/* 바텀시트·토스트 */
-.sheet-bg{position:fixed;inset:0;background:rgba(17,24,39,.4);display:none;align-items:flex-end;justify-content:center;z-index:50}
+/* 시트·토스트 */
+.sheet-bg{position:fixed;inset:0;background:rgba(15,28,63,.45);display:none;align-items:flex-end;justify-content:center;z-index:50}
 .sheet-bg.on{display:flex}
-.sheet{background:#fff;width:100%;max-width:440px;border-radius:var(--r-xl) var(--r-xl) 0 0;padding:24px 20px 28px;max-height:90vh;overflow:auto}
+.sheet{background:#fff;width:100%;max-width:440px;border-radius:var(--r-xl) var(--r-xl) 0 0;padding:26px 22px 28px;max-height:90vh;overflow:auto}
 @media(min-width:720px){.sheet-bg{align-items:center}.sheet{border-radius:var(--r-xl)}}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:var(--r-pill);font-size:14px;opacity:0;transition:.25s;z-index:60;pointer-events:none;max-width:calc(100% - 32px);text-align:center}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(16px);background:var(--navy);color:#fff;padding:13px 20px;border-radius:var(--r-pill);font-size:14px;opacity:0;transition:.25s;z-index:60;pointer-events:none;max-width:calc(100% - 32px);text-align:center;box-shadow:var(--sh-2)}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.foot{text-align:center;color:var(--mut);font-size:12px;padding:28px 0 8px}
 
-.foot{text-align:center;color:var(--mut);font-size:12px;padding:24px 0 8px}
-
-/* 휴대폰 크기 화면 */
-@media(max-width:980px){
-  .phone-area{grid-template-columns:1fr}
+@media(max-width:1000px){
+  .phone-area{grid-template-columns:1fr;justify-items:center}
+  .side{max-width:400px}
   .admin{grid-template-columns:1fr}
   .panel{position:static}
+  .kpis{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:720px){
-  .wrap{padding:12px}
-  .top{flex-wrap:wrap}
-  .phone{width:100%;border:0;border-radius:0;height:auto;box-shadow:none;overflow:visible;background:transparent}
-  .ph-status{display:none}
-  .ph-body{padding:0 0 96px;overflow:visible;background:transparent}
-  .ph-tab{position:fixed;left:12px;right:12px;bottom:12px;z-index:40}
-  .side-note{display:none}
-  .kpis{grid-template-columns:repeat(2,1fr)}
+  .wrap{padding:14px 0 0}
+  .top,.who{padding:0 16px}
+  .top{margin-bottom:14px}
+  .who .hide-sm{display:none}
+  .phone{width:100%;height:auto;border:0;border-radius:0;box-shadow:none;overflow:visible;background:transparent}
+  .island{display:none}
+  .ph-body{padding:4px 16px 112px;overflow:visible}
+  .ph-body.flush{padding:0 0 112px}
+  .navy-head{padding-top:20px}
+  .ph-tab{position:fixed;left:16px;right:16px;bottom:16px;z-index:40}
+  .side{display:none}
+  #adminView{padding:0 16px}
   .tbl .hide-m{display:none}
-  .search{min-width:0;flex:1}
-  .admin-mobile-hint{display:block}
+  .search{min-width:0;flex:1 1 100%}
+  .toast{bottom:100px}
+  .kpi .v{font-size:30px}
+  .foot{padding-bottom:110px}
 }
-.admin-mobile-hint{display:none}
-@media(max-width:720px){.hide-sm{display:none}.toast{bottom:96px}}
-.card.tl{padding-left:44px}.card.tl::before{left:25px;top:26px;bottom:26px}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M8 3v3M16 3v3M3 10h18"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-won" viewBox="0 0 24 24"><path d="M4 6l3.5 12L12 8l4.5 10L20 6M3 11h18M3 14h18"/></symbol>
+  <symbol id="i-brief" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="3"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <!-- 직무 아이콘 -->
+  <symbol id="r-hall" viewBox="0 0 24 24"><path d="M4 15h16M5 15a7 7 0 0 1 14 0M12 6V4M3 19h18"/></symbol>
+  <symbol id="r-kitchen" viewBox="0 0 24 24"><path d="M6 13a4 4 0 1 1 3-6.6A4 4 0 1 1 15 7a4 4 0 1 1 3 6M7 13h10v7H7z"/></symbol>
+  <symbol id="r-cashier" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M7 10V5h8v5M8 14h2M14 14h2M8 17h8"/></symbol>
+  <symbol id="r-manager" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.5"/><path d="M5 21v-1a7 7 0 0 1 14 0v1M12 13.5l-1.5 3 1.5 1.5 1.5-1.5z"/></symbol>
+  <symbol id="r-stock" viewBox="0 0 24 24"><path d="M3 8 12 4l9 4-9 4zM3 8v8l9 4 9-4V8M12 12v8"/></symbol>
+</svg>
 
 <div class="demo-bar"><span><b>제안용 데모</b> · 가상 회사·매장·인물의 예시 데이터예요. 입력한 내용은 이 브라우저에만 저장돼요.</span><button id="resetBtn" type="button">처음 상태로 되돌리기</button></div>
 
 <div class="wrap">
   <header class="top">
-    <div class="logo"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></i>충원노트</div>
+    <div class="logo"><i><svg class="ico" style="width:18px;height:18px;stroke-width:2.2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></i>충원노트</div>
     <div class="seg" role="group" aria-label="화면 고르기">
       <button type="button" data-role="store" aria-pressed="true">매장 화면</button>
       <button type="button" data-role="admin" aria-pressed="false">담당자 화면</button>
     </div>
   </header>
 
-  <!-- 매장 화면 -->
   <section id="storeView">
-    <p class="who">로그인한 매장 <select id="storeSel" aria-label="매장 바꿔 보기"></select> <span class="sub hide-sm">(데모라서 매장을 바꿔 볼 수 있어요)</span></p>
+    <p class="who">로그인한 매장 <select id="storeSel" aria-label="매장 바꿔 보기"></select> <span class="hide-sm">데모라서 35개 매장 중 아무 곳이나 골라 볼 수 있어요</span></p>
     <div class="phone-area">
       <div class="phone">
-        <div class="ph-status"><span>9:41</span><span>충원노트</span></div>
+        <div class="island" aria-hidden="true"></div>
         <div class="ph-body" id="phBody"></div>
         <nav class="ph-tab" aria-label="매장 메뉴">
-          <button type="button" data-tab="home" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>우리 매장</button>
-          <button type="button" data-tab="new"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>구인 요청</button>
-          <button type="button" data-tab="noti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>알림</button>
+          <button type="button" data-tab="home" aria-current="page" aria-label="우리 매장"><svg class="ico"><use href="#i-home"/></svg><span class="lbl">우리 매장</span></button>
+          <button type="button" data-tab="new" aria-label="구인 요청"><svg class="ico"><use href="#i-plus"/></svg><span class="lbl">구인 요청</span></button>
+          <button type="button" data-tab="noti" aria-label="알림"><svg class="ico"><use href="#i-bell"/></svg><span class="lbl">알림</span></button>
         </nav>
       </div>
-      <aside class="side-note">
+      <aside class="side">
         <div class="card">
           <h2 class="h2">이 데모로 확인할 수 있는 것</h2>
-          <ul class="note-list" style="margin-top:8px">
-            <li><b>1</b><span>매장이 메신저 대신 <strong>정해진 항목</strong>으로 구인 요청을 써요. 빠진 칸이 있으면 보낼 수 없어요.</span></li>
-            <li><b>2</b><span>위의 <strong>담당자 화면</strong>으로 바꾸면 방금 보낸 요청이 목록 맨 위에 '접수'로 보여요.</span></li>
-            <li><b>3</b><span>담당자가 채용 확정자를 넣으면 매장 화면의 <strong>충원 현황(예: 1/2명)</strong>과 알림이 바로 바뀌어요.</span></li>
-            <li><b>4</b><span>채용 절차 자체는 앱 밖에서 하고, 앱에는 확정된 근무자의 <strong>이름·연락처·첫 출근일</strong>만 남겨요.</span></li>
-          </ul>
+          <ol class="steps">
+            <li><i>1</i><span>매장이 메신저 대신 <strong>정해진 항목</strong>으로 구인 요청을 써요. 빠진 칸이 있으면 보낼 수 없어요.</span></li>
+            <li><i>2</i><span>위에서 <strong>담당자 화면</strong>으로 바꾸면 방금 보낸 요청이 목록 맨 위에 '접수'로 보여요.</span></li>
+            <li><i>3</i><span>담당자가 채용 확정자를 넣으면 매장의 <strong>충원 현황(예: 1/2명)</strong>과 알림이 바로 바뀌어요.</span></li>
+            <li><i>4</i><span>채용 절차는 앱 밖에서 하고, 앱에는 확정된 분의 <strong>이름·연락처·첫 출근일</strong>만 남겨요.</span></li>
+          </ol>
         </div>
         <div class="card">
           <h2 class="h2">실제로 만들 때</h2>
-          <p class="sub" style="margin-top:6px">안드로이드·iOS 앱 하나(React Native 또는 Flutter)와 담당자용 웹 관리 화면, 서버·DB를 함께 만들어요. 새 요청과 상태 변경은 푸시 알림으로 보내요. 매장이 늘어나도 관리 화면에서 매장과 계정만 추가하면 돼요.</p>
+          <p class="sub" style="margin-top:8px">안드로이드·iOS 앱 하나(React Native 또는 Flutter)와 담당자용 웹 관리 화면, 서버·DB를 함께 만들어요. 새 요청과 상태 변경은 푸시 알림으로 보내요. 매장이 늘어나도 관리 화면에서 매장과 계정만 추가하면 돼요.</p>
         </div>
       </aside>
     </div>
   </section>
 
-  <!-- 담당자 화면 -->
   <section id="adminView" hidden>
-    <p class="who">로그인한 담당자 <strong id="adminName">김하늘</strong> · 채용 담당 <span class="sub admin-mobile-hint">· 휴대폰에서도 같은 화면을 쓸 수 있어요</span></p>
+    <div class="a-head">
+      <span class="avatar">김</span>
+      <div><p class="sub" style="font-size:13px">채용 담당</p><p class="h2" style="font-size:20px"><span id="adminName">김하늘</span> 님, 오늘도 반가워요</p></div>
+    </div>
     <div class="kpis" id="kpis"></div>
-    <div class="admin" style="margin-top:16px">
-      <div class="card" style="padding:0;overflow:hidden">
-        <div style="padding:16px 16px 12px" class="stack">
+    <div class="admin">
+      <div class="list-card">
+        <div style="padding:20px 20px 14px" class="stack">
           <div class="row"><h2 class="h2">구인 요청</h2><span class="sp"></span><span class="sub" id="listCount"></span></div>
           <div class="filters" id="filters">
             <button class="chip" type="button" data-f="all" aria-pressed="true">전체</button>
@@ -250,43 +339,43 @@ textarea.in{height:88px;padding:12px 14px;resize:vertical}
             <button class="chip" type="button" data-f="part" aria-pressed="false">일부 충원</button>
             <button class="chip" type="button" data-f="done" aria-pressed="false">충원 완료</button>
             <button class="chip" type="button" data-f="urgent" aria-pressed="false">급구만</button>
-            <input class="search" id="q" type="search" placeholder="매장·직무 검색" aria-label="매장이나 직무로 검색">
+            <label class="search"><svg class="ico" style="width:18px;height:18px"><use href="#i-search"/></svg><input id="q" type="search" placeholder="매장·직무 검색" aria-label="매장이나 직무로 검색"></label>
           </div>
         </div>
         <div style="overflow-x:auto">
           <table class="tbl">
-            <thead><tr><th>매장</th><th>직무</th><th class="hide-m">근무</th><th>충원</th><th>상태</th><th class="hide-m">요청일</th></tr></thead>
+            <thead><tr><th>매장</th><th>직무</th><th class="hide-m">근무</th><th>충원</th><th>상태</th><th class="hide-m">요청</th></tr></thead>
             <tbody id="rows"></tbody>
           </table>
         </div>
       </div>
-      <div class="panel card" id="panel"><p class="empty">왼쪽 목록에서 요청을 고르면<br>여기서 상태를 바꾸고 채용 확정자를 넣을 수 있어요.</p></div>
+      <div class="panel" id="panel"></div>
     </div>
   </section>
 
-  <p class="foot">충원노트는 제안용 가상 이름이에요 · 매장·인물·연락처는 모두 예시예요</p>
+  <p class="foot">충원노트·하루마켓은 제안용 가상 이름이에요 · 매장·인물·연락처는 모두 예시예요</p>
 </div>
 
-<!-- 바텀시트 -->
-<div class="sheet-bg" id="sheetBg" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
-  <div class="sheet" id="sheet"></div>
-</div>
+<div class="sheet-bg" id="sheetBg" role="dialog" aria-modal="true" aria-labelledby="sheetTitle"><div class="sheet" id="sheet"></div></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 (()=>{
-const KEY='chungwon-demo-v1';
+const KEY='chungwon-demo-v2';
 const ROLES=['홀 서빙','주방 보조','캐셔','매니저','물류·진열'];
+const RIC={'홀 서빙':'r-hall','주방 보조':'r-kitchen','캐셔':'r-cashier','매니저':'r-manager','물류·진열':'r-stock'};
 const TYPES=['정규직','파트타임','단기(1개월 이내)'];
 const DAYS=['월','화','수','목','금','토','일'];
 const AREAS=['잠실','송파','문정','가락','방이','석촌','천호','성내','길동','강동','둔촌','고덕','명일','암사','수서','일원','개포','대치','삼성','역삼','논현','신사','압구정','청담','선릉','도곡','양재','서초','반포','방배','사당','이수','신림','봉천','구로'];
-const STORES=AREAS.map((a,i)=>({id:'s'+(i+1),name:'하루마켓 '+a+'점'}));
-const STAFF=['김하늘','박도윤','이서연'];
+const STORES=AREAS.map((a,i)=>({id:'s'+(i+1),name:'하루마켓 '+a+'점',a}));
 const FAM='김이박최정강조윤장임한오서신권황안송류홍';
 const GIV=['민준','서윤','지호','하은','도현','수아','예준','지민','시우','채원','준서','다은','현우','소율','유진','태윤'];
+const ic=(id,cls='ico',st='')=>`<svg class="${cls}" ${st?`style="${st}"`:''}><use href="#${id}"/></svg>`;
 
 function seed(){
   const now=Date.now(), d=n=>now-n*864e5;
+  const dd=n=>{const x=new Date(now+n*864e5);return (x.getMonth()+1)+'/'+x.getDate()};
+  let k=0; const wk=back=>{k++;return {name:FAM[(k*7)%FAM.length]+GIV[(k*5)%GIV.length],phone:'010-'+(2000+k*137)+'-'+(4100+k*251),first:dd(-back+3),at:now-back*864e5}};
   const r=[
     {s:'s1',role:'홀 서빙',type:'파트타임',n:2,days:['토','일'],time:'11:00~16:00',pay:'시급 11,000원',start:dd(3),urgent:true,memo:'주말 점심 피크 인원 부족',at:d(0.2),st:'new',w:[]},
     {s:'s2',role:'캐셔',type:'정규직',n:1,days:['월','화','수','목','금'],time:'09:00~18:00',pay:'월 230만 원',start:dd(10),urgent:false,memo:'',at:d(1),st:'ing',w:[],by:'김하늘'},
@@ -298,108 +387,131 @@ function seed(){
     {s:'s20',role:'주방 보조',type:'정규직',n:1,days:['월','화','수','목','금'],time:'08:00~17:00',pay:'월 225만 원',start:dd(7),urgent:false,memo:'',at:d(2),st:'ing',w:[],by:'이서연'},
     {s:'s27',role:'홀 서빙',type:'파트타임',n:3,days:['토','일'],time:'12:00~20:00',pay:'시급 11,000원',start:dd(4),urgent:true,memo:'주말 행사',at:d(1.5),st:'part',w:[wk(1)],by:'김하늘'},
     {s:'s14',role:'물류·진열',type:'파트타임',n:1,days:['화','목'],time:'07:00~11:00',pay:'시급 11,000원',start:dd(5),urgent:false,memo:'',at:d(2.5),st:'new',w:[]},
-    {s:'s31',role:'캐셔',type:'정규직',n:1,days:['수','목','금','토','일'],time:'13:00~22:00',pay:'월 235만 원',start:dd(12),urgent:false,memo:'',at:d(4),st:'hold',w:[],by:'박도윤',holdWhy:'매장 요청으로 다음 달로 미룸'},
+    {s:'s31',role:'캐셔',type:'정규직',n:1,days:['수','목','금','토','일'],time:'13:00~22:00',pay:'월 235만 원',start:dd(12),urgent:false,memo:'',at:d(4),st:'hold',w:[],by:'박도윤',holdWhy:'매장 요청으로 미룸'},
+    {s:'s1',role:'캐셔',type:'파트타임',n:1,days:['화','목'],time:'14:00~20:00',pay:'시급 10,500원',start:dd(-12),urgent:false,memo:'',at:d(16),st:'done',w:[wk(13)],by:'이서연'},
   ].map((x,i)=>({...x,id:'r'+(100+i),log:[{t:x.at,m:'매장이 요청을 보냈어요'}].concat(x.by?[{t:x.at+36e5*3,m:x.by+' 담당자가 맡았어요'}]:[]).concat(x.w.map(w=>({t:w.at,m:w.name+'님 채용 확정 · 첫 출근 '+w.first}))).concat(x.st==='hold'?[{t:x.at+864e5,m:'보류: '+x.holdWhy}]:[])}));
-  return {reqs:r,noti:{s1:[{t:d(6)+864e5*2,m:'주방 보조 요청에 1명이 채용 확정됐어요',r:'r102'}]},seq:200};
-  function wk(back){const name=FAM[Math.floor(Math.random()*FAM.length)]+GIV[Math.floor(Math.random()*GIV.length)];return {name,phone:'010-'+r4()+'-'+r4(),first:dd(-back+3),at:now-back*864e5}}
-  function r4(){return String(1000+Math.floor(Math.random()*9000))}
-  function dd(n){const x=new Date(now+n*864e5);return (x.getMonth()+1)+'/'+x.getDate()}
+  return {reqs:r,noti:{s1:[{t:d(4),m:'주방 보조 요청에 1명이 채용 확정됐어요 (1/2명)',r:'r102',unread:true},{t:d(6)+36e5*3,m:'주방 보조 요청을 김하늘 담당자가 맡았어요',r:'r102'}]},seq:200};
 }
 let S; try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
 if(!S||!S.reqs) S=seed();
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
 
 const $=s=>document.querySelector(s), esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const storeName=id=>(STORES.find(s=>s.id===id)||{}).name||id;
-const short=id=>storeName(id).replace('하루마켓 ','');
+const store=id=>STORES.find(s=>s.id===id)||{name:id,a:id};
 const ST={new:['접수','b-new'],ing:['채용 진행','b-ing'],part:['일부 충원','b-part'],done:['충원 완료','b-done'],hold:['보류','b-hold']};
 const badge=st=>`<span class="badge ${ST[st][1]}">${ST[st][0]}</span>`;
-const ago=t=>{const m=Math.round((Date.now()-t)/6e4);if(m<1)return'방금';if(m<60)return m+'분 전';const h=Math.round(m/60);if(h<24)return h+'시간 전';const d=Math.round(h/24);return d+'일 전'};
-const date=t=>{const x=new Date(t);return (x.getMonth()+1)+'/'+x.getDate()};
-const mask=p=>p.replace(/^(\d{3})-(\d{4})-(\d{2})(\d{2})$/,'$1-****-$3$4');
-function autoStatus(r){ if(r.st==='hold')return; const k=r.w.length; if(k>=r.n) r.st='done'; else if(k>0) r.st='part'; else if(r.st==='part'||r.st==='done') r.st=r.by?'ing':'new'; }
-function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),2200)}
-function notify(store,m,rid){(S.noti[store]=S.noti[store]||[]).unshift({t:Date.now(),m,r:rid,unread:true})}
-const icoChev='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>';
+const ago=t=>{const m=Math.round((Date.now()-t)/6e4);if(m<1)return'방금';if(m<60)return m+'분 전';const h=Math.round(m/60);if(h<24)return h+'시간 전';return Math.round(h/24)+'일 전'};
+const mask=p=>p.replace(/^(\d{3})-(\d{4})-(\d{4})$/,'$1-****-$3');
+function autoStatus(r){if(r.st==='hold')return;const k=r.w.length;if(k>=r.n)r.st='done';else if(k>0)r.st='part';else r.st=r.by?'ing':'new'}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),2400)}
+function notify(s,m,rid){(S.noti[s]=S.noti[s]||[]).unshift({t:Date.now(),m,r:rid,unread:true})}
+const pct=r=>Math.min(100,r.w.length/r.n*100);
 
-/* ---------- 역할 전환 ---------- */
-let role='store', me='s1', tab='home', openReq=null, sel=null, filt='all';
+let role='store', me='s1', tab='home', openReq=null, sel=null, filt='all', homeSeg='act', F=null;
 document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{role=b.dataset.role;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#storeView').hidden=role!=='store';$('#adminView').hidden=role!=='admin';render();window.scrollTo(0,0)});
 $('#storeSel').innerHTML=STORES.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
-$('#storeSel').onchange=e=>{me=e.target.value;tab='home';openReq=null;render()};
-document.querySelectorAll('.ph-tab button').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;openReq=null;render();$('#phBody').scrollTop=0});
-$('#resetBtn').onclick=()=>{try{localStorage.removeItem(KEY)}catch(e){};S=seed();openReq=null;sel=null;tab='home';render();toast('처음 상태로 되돌렸어요')};
+$('#storeSel').onchange=e=>{me=e.target.value;tab='home';openReq=null;F=null;render()};
+document.querySelectorAll('.ph-tab button').forEach(b=>b.onclick=()=>go(b.dataset.tab));
+$('#resetBtn').onclick=()=>{try{localStorage.removeItem(KEY)}catch(e){};S=seed();openReq=null;sel=null;tab='home';F=null;render();toast('처음 상태로 되돌렸어요')};
+function go(t,o={}){tab=t;openReq=o.open||null;render();$('#phBody').scrollTop=0;if(innerWidth<=720)window.scrollTo(0,0)}
 
-/* ---------- 매장 화면 ---------- */
+/* ---------- 매장 ---------- */
 function renderStore(){
-  document.querySelectorAll('.ph-tab button').forEach(b=>b.setAttribute('aria-current',b.dataset.tab===tab?'page':'false'));
+  document.querySelectorAll('.ph-tab button').forEach(b=>b.setAttribute('aria-current',(!openReq&&b.dataset.tab===tab)||(openReq&&b.dataset.tab==='home')?'page':'false'));
   const unread=(S.noti[me]||[]).filter(n=>n.unread).length;
-  document.querySelector('.ph-tab [data-tab="noti"]').lastChild.textContent=unread?`알림 ${unread}`:'알림';
+  const nb=document.querySelector('.ph-tab [data-tab="noti"]');nb.querySelector('.dot')?.remove();if(unread)nb.insertAdjacentHTML('beforeend',`<span class="dot">${unread}</span>`);
   const B=$('#phBody');
-  if(openReq) return B.innerHTML=storeDetail(S.reqs.find(r=>r.id===openReq));
-  if(tab==='new') return B.innerHTML=newForm(), bindForm();
-  if(tab==='noti') return B.innerHTML=notiView();
-  const mine=S.reqs.filter(r=>r.s===me).sort((a,b)=>b.at-a.at);
-  const act=mine.filter(r=>r.st!=='done');
-  const need=act.reduce((a,r)=>a+Math.max(0,r.n-r.w.length),0);
-  B.innerHTML=`
-    <div class="ph-head"><div><p class="sub">${esc(storeName(me))}</p><h1 class="h1">아직 ${need}명이<br>더 필요해요</h1></div></div>
-    <button class="btn btn-p btn-block" type="button" data-go="new" style="margin-bottom:16px">새 구인 요청 쓰기</button>
-    <div class="row" style="margin:4px 0 8px"><h2 class="h2">진행 중</h2><span class="sub">${act.length}건</span></div>
-    <div class="stack">${act.length?act.map(reqCard).join(''):'<div class="card empty">진행 중인 요청이 없어요</div>'}</div>
-    ${mine.length>act.length?`<div class="row" style="margin:20px 0 8px"><h2 class="h2">충원 완료</h2><span class="sub">${mine.length-act.length}건</span></div><div class="stack">${mine.filter(r=>r.st==='done').map(reqCard).join('')}</div>`:''}`;
-  B.querySelector('[data-go]').onclick=()=>{tab='new';render()};
-  B.querySelectorAll('[data-open]').forEach(x=>x.onclick=()=>{openReq=x.dataset.open;render();B.scrollTop=0});
+  B.classList.toggle('flush',!!openReq||tab==='new');
+  if(openReq) return detail(B,S.reqs.find(r=>r.id===openReq));
+  if(tab==='new') return form(B);
+  if(tab==='noti') return notis(B);
+  home(B,unread);
 }
-function reqCard(r){
-  const k=r.w.length,p=Math.min(100,k/r.n*100);
+function home(B,unread){
+  const st=store(me), mine=S.reqs.filter(r=>r.s===me).sort((a,b)=>b.at-a.at);
+  const act=mine.filter(r=>r.st!=='done'), done=mine.filter(r=>r.st==='done');
+  const need=act.filter(r=>r.st!=='hold').reduce((a,r)=>a+Math.max(0,r.n-r.w.length),0);
+  const urg=act.filter(r=>r.urgent).length;
+  const soon=act.filter(r=>r.st!=='hold').map(r=>r.start).sort((a,b)=>{const p=s=>{const[m,d]=s.split('/');return m*100+ +d};return p(a)-p(b)})[0];
+  const list=homeSeg==='act'?act:done;
+  B.innerHTML=`
+  <div class="hello"><span class="avatar">${esc(st.a[0])}</span><div class="sp"><p class="s">좋은 하루예요, 점장님</p><p class="n">${esc(st.name)}</p></div>
+    <button class="circle-btn" type="button" data-go="noti" aria-label="알림 ${unread}개">${ic('i-bell')}${unread?`<span class="dot">${unread}</span>`:''}</button></div>
+  <div class="hero">
+    <svg class="art" viewBox="0 0 150 150" aria-hidden="true"><circle cx="96" cy="60" r="54" fill="#1C2D5E"/><circle cx="96" cy="60" r="36" fill="#24397A"/><g fill="none" stroke="#9DB3F2" stroke-width="3" stroke-linecap="round"><circle cx="86" cy="50" r="11"/><path d="M66 86a20 20 0 0 1 40 0"/><circle cx="114" cy="56" r="8" stroke="#6F8AD8"/><path d="M102 84a14 14 0 0 1 26 0" stroke="#6F8AD8"/></g><circle cx="124" cy="96" r="13" fill="#fff"/><path d="M118 96h12M124 90v12" stroke="#0F1C3F" stroke-width="3" stroke-linecap="round"/></svg>
+    <p class="l">아직 필요한 인원</p>
+    <p class="big num">${need}<small>명</small></p>
+    <p class="meta">${act.length?`진행 중 ${act.length}건${urg?` · 급구 ${urg}건`:''}${soon?` · 가장 빠른 시작 ${soon}`:''}`:'지금은 비어 있는 자리가 없어요'}</p>
+    <button class="btn btn-w" type="button" data-go="new">새 구인 요청 쓰기</button>
+  </div>
+  <div class="sec-h"><h2 class="h2">빠르게 요청하기</h2></div>
+  <div class="quick">${ROLES.map(r=>`<button type="button" data-quick="${r}"><span class="c">${ic(RIC[r])}</span>${r.replace('·진열','')}</button>`).join('')}</div>
+  <div class="sec-h"><div class="pills" role="group" aria-label="요청 보기"><button type="button" data-seg="act" aria-pressed="${homeSeg==='act'}">진행 중 ${act.length}</button><button type="button" data-seg="done" aria-pressed="${homeSeg==='done'}">충원 완료 ${done.length}</button></div></div>
+  <div class="stack">${list.length?list.map(card).join(''):`<div class="card empty">${homeSeg==='act'?'진행 중인 요청이 없어요':'아직 충원 완료된 요청이 없어요'}</div>`}</div>`;
+  B.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+  B.querySelectorAll('[data-quick]').forEach(b=>b.onclick=()=>{F=blank();F.role=b.dataset.quick;go('new')});
+  B.querySelectorAll('[data-seg]').forEach(b=>b.onclick=()=>{homeSeg=b.dataset.seg;render()});
+  B.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>go('home',{open:b.dataset.open}));
+}
+function card(r){
   return `<button class="req" type="button" data-open="${r.id}">
-    <div class="row"><span class="t">${esc(r.role)} ${r.n}명</span>${r.urgent?'<span class="urgent">급구</span>':''}<span class="sp"></span>${badge(r.st)}</div>
-    <p class="m">${esc(r.type)} · ${r.days.join('')} ${esc(r.time)} · 시작 ${esc(r.start)}</p>
-    <div class="row" style="margin-top:10px"><div class="bar ${r.st==='done'?'done':''}" style="flex:1"><i style="width:${p}%"></i></div><span class="cnt">${k}/${r.n}명</span></div>
+    <div class="top-r"><span class="role-ic">${ic(RIC[r.role])}</span><div class="sp"><div class="row"><span class="t">${esc(r.role)} ${r.n}명</span>${r.urgent&&r.st!=='done'?'<span class="urgent">급구</span>':''}</div><p class="sub" style="font-size:13px">${esc(r.type)}</p></div>${badge(r.st)}</div>
+    <div class="facts"><span>${ic('i-cal')}${r.days.join('')}</span><span>${ic('i-clock')}${esc(r.time)}</span><span>${ic('i-brief')}시작 ${esc(r.start)}</span></div>
+    <div class="row"><div class="bar ${r.st==='done'?'done':''} sp"><i style="width:${pct(r)}%"></i></div><span class="cnt num">${r.w.length}/${r.n}명</span></div>
   </button>`;
 }
-function storeDetail(r){
-  setTimeout(()=>{const b=$('#phBody .back');b&&(b.onclick=()=>{openReq=null;render()})});
+function detail(B,r){
   const log=[...r.log].sort((a,b)=>b.t-a.t);
-  return `<div class="ph-head"><button class="back" type="button" aria-label="뒤로">${icoChev}</button><span class="sub">요청 #${r.id.slice(1)}</span></div>
-  <div class="card stack">
-    <div class="row"><h1 class="h1" style="font-size:22px">${esc(r.role)} ${r.n}명</h1><span class="sp"></span>${badge(r.st)}</div>
-    <div class="row"><div class="bar ${r.st==='done'?'done':''}" style="flex:1"><i style="width:${Math.min(100,r.w.length/r.n*100)}%"></i></div><span class="cnt" style="font-weight:700">${r.w.length}/${r.n}명</span></div>
-    <dl style="display:grid;grid-template-columns:72px 1fr;gap:6px 8px;font-size:14px">
-      <dt class="sub">근무 형태</dt><dd>${esc(r.type)}</dd><dt class="sub">요일·시간</dt><dd>${r.days.join('·')} ${esc(r.time)}</dd>
-      <dt class="sub">급여</dt><dd>${esc(r.pay)}</dd><dt class="sub">시작 희망</dt><dd>${esc(r.start)}</dd>
-      ${r.memo?`<dt class="sub">메모</dt><dd>${esc(r.memo)}</dd>`:''}<dt class="sub">담당자</dt><dd>${r.by?esc(r.by):'<span class="sub">배정 전</span>'}</dd>
-    </dl>
+  B.innerHTML=`
+  <div class="navy-head">
+    <div class="bar-row"><button class="glass" type="button" data-back aria-label="뒤로">${ic('i-back')}</button>${badge(r.st)}</div>
+    <p class="k">${esc(store(r.s).name)} · 요청 #${r.id.slice(1)}</p>
+    <h1 class="h1">${esc(r.role)} <em>${r.n}명</em> 구해요</h1>
   </div>
-  <h2 class="h2" style="margin:20px 0 8px">채용 확정된 분</h2>
-  <div class="stack">${r.w.length?r.w.map(w=>`<div class="worker"><span class="av">${esc(w.name[0])}</span><div><b>${esc(w.name)}</b><p class="sub">${mask(w.phone)} · 첫 출근 ${esc(w.first)}</p></div></div>`).join(''):'<div class="card empty" style="padding:20px">아직 확정된 분이 없어요. 확정되면 알림으로 알려 드려요.</div>'}</div>
-  <h2 class="h2" style="margin:20px 0 8px">진행 기록</h2>
-  <ul class="tl card">${log.map(l=>`<li>${esc(l.m)}<div class="w">${ago(l.t)}</div></li>`).join('')}</ul>`;
+  <div class="lift card">
+    <div class="facts4">
+      <div>${ic('i-brief')}<b>${esc(r.type.replace('(1개월 이내)',''))}</b>근무 형태</div>
+      <div>${ic('i-cal')}<b>${r.days.join('')}</b>요일</div>
+      <div>${ic('i-clock')}<b>${esc(r.time)}</b>시간</div>
+      <div>${ic('i-won')}<b>${esc(r.pay.replace('시급 ','').replace('월 ',''))}</b>${r.pay.startsWith('월')?'월급':'시급'}</div>
+    </div>
+    <div style="border-top:1px solid var(--line-2);margin-top:16px;padding-top:16px">
+      <div class="row"><span class="sub">충원 현황</span><span class="sp"></span><b class="num">${r.w.length}/${r.n}명</b></div>
+      <div class="bar ${r.st==='done'?'done':''}" style="margin-top:8px"><i style="width:${pct(r)}%"></i></div>
+      <p class="sub" style="font-size:13px;margin-top:10px">시작 희망 ${esc(r.start)} · 담당 ${r.by?esc(r.by):'배정 전'}${r.memo?' · '+esc(r.memo):''}</p>
+    </div>
+  </div>
+  <div class="in-pad">
+    <div class="sec-h"><h2 class="h2">채용 확정된 분</h2></div>
+    <div class="stack">${r.w.length?r.w.map(w=>`<div class="worker"><span class="avatar">${esc(w.name[0])}</span><div class="sp"><b>${esc(w.name)}</b><p class="sub" style="font-size:13px">${mask(w.phone)} · 첫 출근 ${esc(w.first)}</p></div><span class="role-ic" style="width:32px;height:32px;background:var(--ok-bg);color:var(--ok)">${ic('i-check','ico','width:16px;height:16px')}</span></div>`).join(''):'<div class="card empty" style="padding:22px">아직 확정된 분이 없어요.<br>확정되면 알림으로 알려 드려요.</div>'}</div>
+    <div class="sec-h"><h2 class="h2">진행 기록</h2></div>
+    <div class="card"><ul class="tl">${log.map(l=>`<li>${esc(l.m)}<div class="w">${ago(l.t)}</div></li>`).join('')}</ul></div>
+  </div>`;
+  B.querySelector('[data-back]').onclick=()=>go('home');
 }
-let F;
-function newForm(){
-  F=F||{role:'',type:'',n:1,days:[],t1:'',t2:'',pay:'',start:'',urgent:false,memo:''};
+function blank(){return {role:'',type:'',n:1,days:[],t1:'',t2:'',pay:'',start:'',urgent:false,memo:''}}
+function form(B){
+  F=F||blank();
   const o=(arr,key)=>arr.map(v=>`<button type="button" class="opt" data-k="${key}" data-v="${v}" aria-pressed="${F[key]===v}">${v}</button>`).join('');
-  return `<div class="ph-head"><div><p class="sub">${esc(storeName(me))}</p><h1 class="h1">구인 요청 쓰기</h1></div></div>
-  <form id="reqForm" class="card stack" novalidate>
-    <div><span style="font-size:13px;font-weight:600;color:var(--ink-2)">직무</span><div class="opts" style="margin-top:6px">${o(ROLES,'role')}</div><p class="err" data-e="role" hidden>직무를 골라 주세요</p></div>
-    <div><span style="font-size:13px;font-weight:600;color:var(--ink-2)">근무 형태</span><div class="opts" style="margin-top:6px">${o(TYPES,'type')}</div><p class="err" data-e="type" hidden>근무 형태를 골라 주세요</p></div>
-    <div><span style="font-size:13px;font-weight:600;color:var(--ink-2)">필요 인원</span><div class="stepper" style="margin-top:6px"><button type="button" data-step="-1" aria-label="한 명 줄이기">−</button><output id="nOut">${F.n}명</output><button type="button" data-step="1" aria-label="한 명 늘리기">+</button></div></div>
-    <div><span style="font-size:13px;font-weight:600;color:var(--ink-2)">근무 요일</span><div class="days" style="margin-top:6px">${DAYS.map(d=>`<button type="button" class="opt" data-day="${d}" aria-pressed="${F.days.includes(d)}">${d}</button>`).join('')}</div><p class="err" data-e="days" hidden>요일을 하나 이상 골라 주세요</p></div>
-    <div class="grid2"><label class="f"><span>시작 시간</span><input class="in" type="time" name="t1" value="${F.t1}"></label><label class="f"><span>끝 시간</span><input class="in" type="time" name="t2" value="${F.t2}"></label></div>
-    <p class="err" data-e="time" hidden>근무 시간을 넣어 주세요</p>
-    <label class="f"><span>급여</span><input class="in" name="pay" placeholder="예: 시급 11,000원" value="${esc(F.pay)}"></label>
-    <p class="err" data-e="pay" hidden>급여를 적어 주세요</p>
-    <label class="f"><span>근무 시작 희망일</span><input class="in" type="date" name="start" value="${F.start}"></label>
-    <p class="err" data-e="start" hidden>시작 희망일을 골라 주세요</p>
-    <label class="row" style="min-height:44px;gap:10px"><input type="checkbox" name="urgent" ${F.urgent?'checked':''} style="width:20px;height:20px;accent-color:var(--brand)"><span><b>급구</b> <span class="sub">· 담당자 목록 맨 위에 빨간 표시가 붙어요</span></span></label>
-    <label class="f"><span>메모 (선택)</span><textarea class="in" name="memo" placeholder="예: 주말 점심 피크 시간 인원 부족">${esc(F.memo)}</textarea></label>
-    <button class="btn btn-p btn-block" type="submit">요청 보내기</button>
+  B.innerHTML=`
+  <div class="navy-head">
+    <div class="bar-row"><button class="glass" type="button" data-back aria-label="홈으로">${ic('i-back')}</button><span class="k">${esc(store(me).name)}</span></div>
+    <h1 class="h1">어떤 분이<br><em>필요하세요?</em></h1>
+  </div>
+  <form id="reqForm" class="lift card stack" novalidate style="padding:22px">
+    <div><span class="fl">직무</span><div class="opts">${o(ROLES,'role')}</div><p class="err" data-e="role" hidden>직무를 골라 주세요</p></div>
+    <div><span class="fl">근무 형태</span><div class="opts">${o(TYPES,'type')}</div><p class="err" data-e="type" hidden>근무 형태를 골라 주세요</p></div>
+    <div><span class="fl">필요 인원</span><div class="stepper"><button type="button" data-step="-1" aria-label="한 명 줄이기">−</button><output id="nOut">${F.n}명</output><button type="button" data-step="1" aria-label="한 명 늘리기">+</button></div></div>
+    <div><span class="fl">근무 요일</span><div class="days">${DAYS.map(d=>`<button type="button" class="opt" data-day="${d}" aria-pressed="${F.days.includes(d)}">${d}</button>`).join('')}</div><p class="err" data-e="days" hidden>요일을 하나 이상 골라 주세요</p></div>
+    <div><div class="grid2"><label><span class="fl">시작 시간</span><input class="in" type="time" name="t1" value="${F.t1}"></label><label><span class="fl">끝 시간</span><input class="in" type="time" name="t2" value="${F.t2}"></label></div><p class="err" data-e="time" hidden>근무 시간을 넣어 주세요</p></div>
+    <label style="display:block"><span class="fl">급여</span><input class="in" name="pay" placeholder="예: 시급 11,000원" value="${esc(F.pay)}"><p class="err" data-e="pay" hidden>급여를 적어 주세요</p></label>
+    <label style="display:block"><span class="fl">근무 시작 희망일</span><input class="in" type="date" name="start" value="${F.start}"><p class="err" data-e="start" hidden>시작 희망일을 골라 주세요</p></label>
+    <label class="switch"><input type="checkbox" name="urgent" ${F.urgent?'checked':''}><span><b style="color:var(--bad)">급구</b><span class="sub" style="font-size:13px"> · 담당자 목록 맨 위에 표시돼요</span></span></label>
+    <label style="display:block"><span class="fl">메모 (선택)</span><textarea class="in" name="memo" placeholder="예: 주말 점심 피크 시간 인원 부족">${esc(F.memo)}</textarea></label>
+    <button class="cta" type="submit"><span style="text-align:left">요청 보내기<small>담당자에게 바로 알림이 가요</small></span><span class="go">${ic('i-arrow')}</span></button>
   </form>`;
-}
-function bindForm(){
   const f=$('#reqForm');
+  B.querySelector('[data-back]').onclick=()=>go('home');
   f.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{F[b.dataset.k]=b.dataset.v;f.querySelectorAll(`[data-k="${b.dataset.k}"]`).forEach(x=>x.setAttribute('aria-pressed',x===b));f.querySelector(`[data-e="${b.dataset.k}"]`).hidden=true});
   f.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{const d=b.dataset.day;F.days=F.days.includes(d)?F.days.filter(x=>x!==d):[...F.days,d].sort((a,c)=>DAYS.indexOf(a)-DAYS.indexOf(c));b.setAttribute('aria-pressed',F.days.includes(d));f.querySelector('[data-e="days"]').hidden=true});
   f.querySelectorAll('[data-step]').forEach(b=>b.onclick=()=>{F.n=Math.max(1,Math.min(20,F.n+ +b.dataset.step));$('#nOut').textContent=F.n+'명'});
@@ -410,108 +522,115 @@ function bindForm(){
     if(first){first.scrollIntoView({block:'center',behavior:'smooth'});return}
     const sd=new Date(F.start);
     const r={id:'r'+(++S.seq),s:me,role:F.role,type:F.type,n:F.n,days:F.days,time:F.t1+'~'+F.t2,pay:F.pay.trim(),start:(sd.getMonth()+1)+'/'+sd.getDate(),urgent:F.urgent,memo:F.memo.trim(),at:Date.now(),st:'new',w:[],log:[{t:Date.now(),m:'매장이 요청을 보냈어요'}]};
-    S.reqs.unshift(r);save();F=null;tab='home';openReq=r.id;render();$('#phBody').scrollTop=0;
-    toast('요청을 보냈어요. 담당자 화면에서 바로 보여요');
+    S.reqs.unshift(r);save();F=null;homeSeg='act';go('home',{open:r.id});toast('요청을 보냈어요. 담당자 화면에서 바로 보여요');
   };
 }
-function notiView(){
+function notis(B){
   const L=S.noti[me]||[];
-  setTimeout(()=>{L.forEach(n=>n.unread=false);save();const t=document.querySelector('.ph-tab [data-tab="noti"]');t&&(t.lastChild.textContent='알림');
-    document.querySelectorAll('#phBody [data-open]').forEach(x=>x.onclick=()=>{openReq=x.dataset.open;tab='home';render()})},50);
-  return `<div class="ph-head"><h1 class="h1">알림</h1></div>
-  <div class="stack">${L.length?L.map(n=>`<button class="req" type="button" data-open="${n.r}"><div class="row">${n.unread?'<span class="badge b-new">새 알림</span>':''}<span class="sub sp" style="text-align:right">${ago(n.t)}</span></div><p style="margin-top:4px;font-weight:600">${esc(n.m)}</p></button>`).join(''):'<div class="card empty">아직 알림이 없어요.<br>담당자가 요청을 맡거나 채용이 확정되면 여기로 와요.</div>'}</div>`;
+  B.innerHTML=`<div class="hello"><div class="sp"><p class="s">${esc(store(me).name)}</p><p class="n">알림</p></div></div>
+  <div class="stack">${L.length?L.map(n=>{const r=S.reqs.find(x=>x.id===n.r);return `<button class="noti ${n.unread?'unread':''}" type="button" data-open="${n.r}"><span class="role-ic">${ic(r?RIC[r.role]:'i-bell')}</span><span class="sp"><b style="font-size:14px;display:block">${esc(n.m)}</b><span class="sub" style="font-size:12px">${ago(n.t)}${n.unread?' · 새 알림':''}</span></span></button>`}).join(''):'<div class="card empty">아직 알림이 없어요.<br>담당자가 요청을 맡거나 채용이 확정되면 여기로 와요.</div>'}</div>`;
+  B.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>go('home',{open:b.dataset.open}));
+  setTimeout(()=>{L.forEach(n=>n.unread=false);save();document.querySelector('.ph-tab [data-tab="noti"] .dot')?.remove()},600);
 }
 
-/* ---------- 담당자 화면 ---------- */
+/* ---------- 담당자 ---------- */
 function renderAdmin(){
   const R=S.reqs, act=R.filter(r=>r.st!=='done'&&r.st!=='hold');
   const need=act.reduce((a,r)=>a+Math.max(0,r.n-r.w.length),0);
   const wk=Date.now()-7*864e5, filled=R.reduce((a,r)=>a+r.w.filter(w=>w.at>wk).length,0);
   const urg=act.filter(r=>r.urgent).length, newc=R.filter(r=>r.st==='new').length;
   $('#kpis').innerHTML=`
-    <div class="kpi"><p class="l">새로 들어온 요청</p><p class="v">${newc}<small>건</small></p></div>
-    <div class="kpi"><p class="l">아직 필요한 인원</p><p class="v">${need}<small>명</small></p></div>
-    <div class="kpi alert"><p class="l">급구</p><p class="v">${urg}<small>건</small></p></div>
-    <div class="kpi"><p class="l">최근 7일 채용 확정</p><p class="v">${filled}<small>명</small></p></div>`;
+    <div class="kpi navy"><p class="l">새로 들어온 요청</p><p class="v num">${newc}<small>건</small></p><p class="l" style="font-size:12px">아직 담당자가 없어요 · 매장 ${STORES.length}곳</p></div>
+    <div class="kpi"><p class="l">아직 필요한 인원</p><p class="v num">${need}<small>명</small></p></div>
+    <div class="kpi red"><p class="l">급구</p><p class="v num">${urg}<small>건</small></p></div>
+    <div class="kpi"><p class="l">최근 7일 채용 확정</p><p class="v num">${filled}<small>명</small></p></div>`;
   const q=$('#q').value.trim();
   let L=R.filter(r=>filt==='all'||(filt==='urgent'?r.urgent&&r.st!=='done':r.st===filt));
-  if(q) L=L.filter(r=>(storeName(r.s)+r.role).includes(q));
+  if(q)L=L.filter(r=>(store(r.s).name+r.role).includes(q));
   L.sort((a,b)=>(b.st==='new')-(a.st==='new')||(b.urgent&&b.st!=='done')-(a.urgent&&a.st!=='done')||b.at-a.at);
-  $('#listCount').textContent=L.length+'건 · 매장 '+STORES.length+'곳';
+  $('#listCount').textContent=L.length+'건';
   $('#rows').innerHTML=L.length?L.map(r=>`<tr data-id="${r.id}" class="${r.id===sel?'sel':''}" tabindex="0">
-    <td><b>${esc(short(r.s))}</b>${r.urgent&&r.st!=='done'?' <span class="urgent">급구</span>':''}</td>
+    <td><div class="row"><span class="role-ic" style="width:34px;height:34px">${ic(RIC[r.role],'ico','width:17px;height:17px')}</span><div><b>${esc(store(r.s).a)}점</b>${r.urgent&&r.st!=='done'?' <span class="urgent">급구</span>':''}</div></div></td>
     <td>${esc(r.role)}<div class="sub" style="font-size:12px">${esc(r.type)}</div></td>
     <td class="hide-m">${r.days.join('')}<div class="sub" style="font-size:12px">${esc(r.time)}</div></td>
-    <td class="num"><b>${r.w.length}</b>/${r.n}</td><td>${badge(r.st)}</td><td class="hide-m sub">${ago(r.at)}</td></tr>`).join(''):`<tr><td colspan="6" class="empty">조건에 맞는 요청이 없어요</td></tr>`;
-  $('#rows').querySelectorAll('tr[data-id]').forEach(tr=>{tr.onclick=()=>{sel=tr.dataset.id;renderAdmin();if(innerWidth<=980)$('#panel').scrollIntoView({behavior:'smooth',block:'start'})};tr.onkeydown=e=>{if(e.key==='Enter')tr.onclick()}});
-  renderPanel();
+    <td class="num"><b>${r.w.length}</b>/${r.n}</td><td>${badge(r.st)}</td><td class="hide-m sub" style="font-size:13px">${ago(r.at)}</td></tr>`).join(''):`<tr><td colspan="6" class="empty">조건에 맞는 요청이 없어요</td></tr>`;
+  $('#rows').querySelectorAll('tr[data-id]').forEach(tr=>{tr.onclick=()=>{sel=tr.dataset.id;renderAdmin();if(innerWidth<=1000)$('#panel').scrollIntoView({behavior:'smooth',block:'start'})};tr.onkeydown=e=>{if(e.key==='Enter')tr.onclick()}});
+  panel();
 }
 document.querySelectorAll('#filters .chip').forEach(c=>c.onclick=()=>{filt=c.dataset.f;document.querySelectorAll('#filters .chip').forEach(x=>x.setAttribute('aria-pressed',x===c));renderAdmin()});
 $('#q').oninput=()=>renderAdmin();
 
-function renderPanel(){
+function panel(){
   const P=$('#panel'), r=S.reqs.find(x=>x.id===sel);
-  if(!r){P.innerHTML='<p class="empty">목록에서 요청을 고르면<br>여기서 상태를 바꾸고 채용 확정자를 넣을 수 있어요.</p>';return}
-  const log=[...r.log].sort((a,b)=>b.t-a.t);
-  P.innerHTML=`<div class="stack">
-    <div class="row"><div><p class="sub">${esc(storeName(r.s))}</p><h2 class="h1" style="font-size:22px">${esc(r.role)} ${r.n}명</h2></div><span class="sp"></span>${badge(r.st)}</div>
-    <div class="row"><div class="bar ${r.st==='done'?'done':''}" style="flex:1"><i style="width:${Math.min(100,r.w.length/r.n*100)}%"></i></div><b class="num">${r.w.length}/${r.n}명</b></div>
-    <p class="sub" style="font-size:14px">${esc(r.type)} · ${r.days.join('·')} ${esc(r.time)} · ${esc(r.pay)} · 시작 ${esc(r.start)}${r.memo?'<br>메모: '+esc(r.memo):''}</p>
-    <div class="row" style="flex-wrap:wrap">
-      ${!r.by?`<button class="btn btn-p btn-sm" type="button" data-act="take">내가 맡기</button>`:`<span class="sub">담당 ${esc(r.by)}</span>`}
-      <span class="sp"></span>
-      ${r.st!=='hold'&&r.st!=='done'?`<button class="btn btn-s btn-sm" type="button" data-act="hold">보류</button>`:''}
-      ${r.st==='hold'?`<button class="btn btn-s btn-sm" type="button" data-act="resume">다시 진행</button>`:''}
-    </div>
-    <div style="border-top:1px solid var(--line-2);padding-top:12px">
-      <div class="row"><h3 class="h2" style="font-size:15px">채용 확정자</h3><span class="sp"></span>${r.w.length<r.n&&r.st!=='hold'?`<button class="btn btn-p btn-sm" type="button" data-act="add">확정자 넣기</button>`:''}</div>
-      <div class="stack" style="margin-top:8px">${r.w.length?r.w.map((w,i)=>`<div class="worker"><span class="av">${esc(w.name[0])}</span><div class="sp"><b>${esc(w.name)}</b><p class="sub" style="font-size:13px">${esc(w.phone)} · 첫 출근 ${esc(w.first)}</p></div><button class="btn btn-s btn-sm" type="button" data-del="${i}" aria-label="${esc(w.name)} 확정 취소">취소</button></div>`).join(''):'<p class="sub" style="font-size:14px">아직 없어요. 채용은 앱 밖에서 진행하고, 확정되면 여기에 넣어 주세요.</p>'}</div>
-    </div>
-    <div style="border-top:1px solid var(--line-2);padding-top:12px"><h3 class="h2" style="font-size:15px;margin-bottom:8px">진행 기록</h3><ul class="tl">${log.map(l=>`<li>${esc(l.m)}<div class="w">${ago(l.t)}</div></li>`).join('')}</ul></div>
+  if(!r){P.innerHTML=`<div class="navy-head"><p class="k">요청 상세</p><h2 class="h1">목록에서 요청을<br><em>골라 주세요</em></h2></div><p class="empty">여기서 담당을 맡고, 채용 확정자를 넣고,<br>보류할 수 있어요.</p>`;return}
+  const log=[...r.log].sort((a,b)=>b.t-a.t), by=$('#adminName').textContent;
+  P.innerHTML=`
+  <div class="navy-head">
+    <div class="bar-row" style="margin-bottom:12px"><p class="k">${esc(store(r.s).name)} · #${r.id.slice(1)}</p>${badge(r.st)}</div>
+    <h2 class="h1">${esc(r.role)} <em>${r.n}명</em></h2>
+    <p class="k" style="margin-top:4px">${esc(r.type)} · ${r.days.join('·')} ${esc(r.time)} · ${esc(r.pay)} · 시작 ${esc(r.start)}</p>
+    <div class="row" style="margin-top:14px"><div class="bar sp" style="background:rgba(255,255,255,.15)"><i style="width:${pct(r)}%;background:#9DB3F2"></i></div><b class="num">${r.w.length}/${r.n}명</b></div>
+  </div>
+  <div class="pb">
+    <section>
+      ${r.memo?`<p class="sub" style="margin-bottom:12px">매장 메모: ${esc(r.memo)}</p>`:''}
+      <div class="row" style="flex-wrap:wrap">
+        ${!r.by?`<button class="btn btn-n btn-sm" type="button" data-act="take">내가 맡기</button>`:`<span class="avatar" style="width:32px;height:32px;font-size:12px;border:0;box-shadow:none">${esc(r.by[0])}</span><span class="sub">담당 <b style="color:var(--ink)">${esc(r.by)}</b></span>`}
+        <span class="sp"></span>
+        ${r.st!=='hold'&&r.st!=='done'?`<button class="btn btn-s btn-sm" type="button" data-act="hold">보류</button>`:''}
+        ${r.st==='hold'?`<button class="btn btn-s btn-sm" type="button" data-act="resume">다시 진행</button>`:''}
+      </div>
+    </section>
+    <section>
+      <div class="row"><h3 class="h2" style="font-size:15px">채용 확정자</h3><span class="sp"></span></div>
+      <div class="stack" style="margin-top:10px">${r.w.length?r.w.map((w,i)=>`<div class="worker" style="box-shadow:none;background:var(--soft)"><span class="avatar">${esc(w.name[0])}</span><div class="sp"><b>${esc(w.name)}</b><p class="sub" style="font-size:13px">${esc(w.phone)} · 첫 출근 ${esc(w.first)}</p></div><button class="btn btn-s btn-sm" type="button" data-del="${i}" aria-label="${esc(w.name)} 확정 취소">취소</button></div>`).join(''):'<p class="sub">아직 없어요. 채용은 앱 밖에서 진행하고, 확정되면 넣어 주세요.</p>'}</div>
+      ${r.w.length<r.n&&r.st!=='hold'?`<button class="cta" type="button" data-act="add" style="margin-top:14px"><span style="text-align:left">채용 확정자 넣기<small>매장 화면과 알림이 바로 바뀌어요</small></span><span class="go">${ic('i-arrow')}</span></button>`:''}
+    </section>
+    <section><h3 class="h2" style="font-size:15px;margin-bottom:12px">진행 기록</h3><ul class="tl">${log.map(l=>`<li>${esc(l.m)}<div class="w">${ago(l.t)}</div></li>`).join('')}</ul></section>
   </div>`;
-  const by=$('#adminName').textContent;
   P.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{
     const a=b.dataset.act;
     if(a==='take'){r.by=by;if(r.st==='new')r.st='ing';r.log.push({t:Date.now(),m:by+' 담당자가 맡았어요'});notify(r.s,`${r.role} 요청을 ${by} 담당자가 맡았어요`,r.id);save();renderAdmin();toast('매장에 "담당자 배정" 알림을 보냈어요')}
-    if(a==='hold'){openSheet(holdSheet(r))}
+    if(a==='hold')openSheet(holdSheet(r));
     if(a==='resume'){r.st='ing';autoStatus(r);r.log.push({t:Date.now(),m:'다시 진행해요'});notify(r.s,`${r.role} 요청을 다시 진행해요`,r.id);save();renderAdmin()}
-    if(a==='add'){openSheet(addSheet(r))}
+    if(a==='add')openSheet(addSheet(r));
   });
   P.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{const w=r.w.splice(+b.dataset.del,1)[0];r.log.push({t:Date.now(),m:w.name+'님 확정 취소'});autoStatus(r);notify(r.s,`${r.role} 요청의 확정자 1명이 취소됐어요`,r.id);save();renderAdmin();toast('확정을 취소했어요')});
 }
 function addSheet(r){
-  return {html:`<h2 class="h2" id="sheetTitle">채용 확정자 넣기</h2><p class="sub" style="margin:4px 0 16px">${esc(short(r.s))} · ${esc(r.role)} (${r.w.length}/${r.n}명)</p>
+  return {html:`<h2 class="h2" id="sheetTitle" style="font-size:20px">채용 확정자 넣기</h2><p class="sub" style="margin:4px 0 18px">${esc(store(r.s).name)} · ${esc(r.role)} (${r.w.length}/${r.n}명)</p>
   <form id="wf" class="stack" novalidate>
-    <label class="f"><span>이름</span><input class="in" name="name" autocomplete="off" placeholder="예: 김민준"></label>
-    <label class="f"><span>연락처</span><input class="in" name="phone" inputmode="tel" placeholder="010-0000-0000"></label>
-    <label class="f"><span>첫 출근일</span><input class="in" type="date" name="first"></label>
+    <label style="display:block"><span class="fl">이름</span><input class="in" name="name" autocomplete="off" placeholder="예: 김민준"></label>
+    <label style="display:block"><span class="fl">연락처</span><input class="in" name="phone" inputmode="tel" placeholder="010-0000-0000"></label>
+    <label style="display:block"><span class="fl">첫 출근일</span><input class="in" type="date" name="first"></label>
     <p class="err" id="wfErr" hidden></p>
-    <p class="sub" style="font-size:13px">앱에는 이 세 가지만 남겨요. 매장에는 연락처 가운데 자리가 가려져 보여요.</p>
-    <div class="grid2"><button class="btn btn-s" type="button" data-close>닫기</button><button class="btn btn-p" type="submit">확정하기</button></div>
-  </form>`,bind:()=>{const f=$('#wf');f.name.focus();f.phone.oninput=()=>{let d=f.phone.value.replace(/\D/g,'').slice(0,11);f.phone.value=d.length>7?d.replace(/(\d{3})(\d{4})(\d+)/,'$1-$2-$3'):d.length>3?d.replace(/(\d{3})(\d+)/,'$1-$2'):d};
-    f.onsubmit=e=>{e.preventDefault();const n=f.name.value.trim(),p=f.phone.value,d=f.first.value,er=$('#wfErr');
-      if(!n||!/^010-\d{4}-\d{4}$/.test(p)||!d){er.hidden=false;er.textContent=!n?'이름을 넣어 주세요':!d&&/^010-\d{4}-\d{4}$/.test(p)?'첫 출근일을 골라 주세요':'연락처를 010-0000-0000 형식으로 넣어 주세요';return}
+    <p class="sub" style="font-size:13px">앱에는 이 세 가지만 남겨요. 매장에는 연락처 가운데 네 자리가 가려져 보여요.</p>
+    <div class="grid2"><button class="btn btn-s" type="button" data-close>닫기</button><button class="btn btn-n" type="submit">확정하기</button></div>
+  </form>`,bind:()=>{const f=$('#wf');f.name.focus();
+    f.phone.oninput=()=>{let d=f.phone.value.replace(/\D/g,'').slice(0,11);f.phone.value=d.length>7?d.replace(/(\d{3})(\d{4})(\d+)/,'$1-$2-$3'):d.length>3?d.replace(/(\d{3})(\d+)/,'$1-$2'):d};
+    f.onsubmit=e=>{e.preventDefault();const n=f.name.value.trim(),p=f.phone.value,d=f.first.value,er=$('#wfErr'),okp=/^010-\d{4}-\d{4}$/.test(p);
+      if(!n||!okp||!d){er.hidden=false;er.textContent=!n?'이름을 넣어 주세요':!okp?'연락처를 010-0000-0000 형식으로 넣어 주세요':'첫 출근일을 골라 주세요';return}
       const x=new Date(d),first=(x.getMonth()+1)+'/'+x.getDate();
       r.w.push({name:n,phone:p,first,at:Date.now()});if(!r.by)r.by=$('#adminName').textContent;autoStatus(r);
       r.log.push({t:Date.now(),m:`${n}님 채용 확정 · 첫 출근 ${first}`});
       notify(r.s,`${r.role} 요청에 1명이 채용 확정됐어요 (${r.w.length}/${r.n}명)`,r.id);
-      save();closeSheet();renderAdmin();toast(r.st==='done'?'충원 완료! 매장에 알림을 보냈어요':'확정했어요. 매장 화면 충원 현황이 바로 바뀌어요');}}};
+      save();closeSheet();renderAdmin();toast(r.st==='done'?'충원 완료! 매장에 알림을 보냈어요':'확정했어요. 매장 화면 충원 현황이 바로 바뀌어요')}}};
 }
 function holdSheet(r){
-  return {html:`<h2 class="h2" id="sheetTitle">보류하기</h2><p class="sub" style="margin:4px 0 16px">보류 이유는 매장에도 그대로 보여요.</p>
+  return {html:`<h2 class="h2" id="sheetTitle" style="font-size:20px">보류하기</h2><p class="sub" style="margin:4px 0 18px">보류 이유는 매장에도 그대로 보여요.</p>
   <form id="hf" class="stack"><div class="opts">${['매장 요청으로 미룸','급여 조건 조정 중','지원자 없음 · 조건 재검토'].map(v=>`<button type="button" class="opt" data-v="${v}" aria-pressed="false">${v}</button>`).join('')}</div>
-  <div class="grid2"><button class="btn btn-s" type="button" data-close>닫기</button><button class="btn btn-p" type="submit" disabled>보류하기</button></div></form>`,
+  <div class="grid2"><button class="btn btn-s" type="button" data-close>닫기</button><button class="btn btn-n" type="submit" disabled>보류하기</button></div></form>`,
   bind:()=>{let why='';const f=$('#hf');f.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{why=b.dataset.v;f.querySelectorAll('.opt').forEach(x=>x.setAttribute('aria-pressed',x===b));f.querySelector('[type=submit]').disabled=false});
     f.onsubmit=e=>{e.preventDefault();r.st='hold';r.log.push({t:Date.now(),m:'보류: '+why});notify(r.s,`${r.role} 요청이 보류됐어요 (${why})`,r.id);save();closeSheet();renderAdmin();toast('보류했어요')}}};
 }
 let lastFocus;
 function openSheet(s){lastFocus=document.activeElement;$('#sheet').innerHTML=s.html;$('#sheetBg').classList.add('on');s.bind();$('#sheet').querySelectorAll('[data-close]').forEach(b=>b.onclick=closeSheet)}
-function closeSheet(){$('#sheetBg').classList.remove('on');lastFocus&&lastFocus.focus&&lastFocus.focus()}
+function closeSheet(){$('#sheetBg').classList.remove('on');lastFocus?.focus?.()}
 $('#sheetBg').onclick=e=>{if(e.target.id==='sheetBg')closeSheet()};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
 
-function render(){ role==='store'?renderStore():renderAdmin(); }
-$('#storeSel').value=me; render();
+function render(){role==='store'?renderStore():renderAdmin()}
+$('#storeSel').value=me;render();
 })();
 </script>
 </body>
