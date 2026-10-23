@@ -165,6 +165,7 @@ button.lcard:hover{background:var(--lav-2)}
 .tl .w{font-size:12px;color:var(--mut)}
 .ncard p,.steps span,.kpi .l,.hi-sub,.lcard b{text-wrap:pretty}
 .only-narrow{display:none}
+body.is-admin .blob{display:none}
 .empty{color:var(--mut);text-align:center;padding:26px 10px;font-size:14px}
 
 .notes{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;margin-top:40px}
@@ -235,7 +236,14 @@ button.lcard:hover{background:var(--lav-2)}
   .tbl .hide-m{display:none}
   .toast{bottom:96px}
   .foot{padding-bottom:100px}
-  .kpi .v{font-size:30px}
+  .kpis{grid-template-columns:repeat(4,1fr);gap:8px}
+  .kpi{padding:12px 10px;border-radius:16px}
+  .kpi .l{font-size:11px}
+  .kpi .v{font-size:22px}
+  .kpi .v small{font-size:12px}
+  .kpi.hero .l:last-child{display:none}
+  .a-head .big{font-size:20px!important}
+  .a-head{margin-bottom:12px}
   .blob.b{display:none}
   .chip,.oc,.seg button,.who select,.stepper button,.btn,.iconbtn,.more,.demo-bar button{min-height:44px}
   .stepper button{min-width:44px}
@@ -316,7 +324,7 @@ button.lcard:hover{background:var(--lav-2)}
             <label class="search"><svg class="ico" style="width:17px;height:17px"><use href="#i-search"/></svg><input id="q" type="search" placeholder="매장·직무 검색" aria-label="매장이나 직무로 검색"></label>
           </div>
         </div>
-        <div style="overflow-x:auto"><table class="tbl"><thead><tr><th>매장</th><th>직무</th><th class="hide-m">근무</th><th>충원</th><th>상태</th><th class="hide-m">요청</th></tr></thead><tbody id="rows"></tbody></table></div>
+        <div style="overflow-x:auto"><table class="tbl"><thead><tr><th>매장</th><th>직무</th><th class="hide-m">근무</th><th>충원</th><th>상태</th><th class="hide-m">시작</th><th class="hide-m">담당</th><th class="hide-m">요청</th></tr></thead><tbody id="rows"></tbody></table></div>
       </div>
       <div class="panel" id="panel"></div>
     </div>
@@ -330,7 +338,7 @@ button.lcard:hover{background:var(--lav-2)}
 
 <script>
 (()=>{
-const KEY='chungwon-demo-v3';
+const KEY='chungwon-demo-v4';
 const ROLES=['홀 서빙','주방 보조','캐셔','매니저','물류·진열'];
 const RIC={'홀 서빙':'r-hall','주방 보조':'r-kitchen','캐셔':'r-cashier','매니저':'r-manager','물류·진열':'r-stock'};
 const TYPES=['정규직','파트타임','단기(1개월 이내)'];
@@ -340,9 +348,11 @@ const STORES=AREAS.map((a,i)=>({id:'s'+(i+1),name:'하루마켓 '+a+'점',a}));
 const FAM='김이박최정강조윤장임한오서신권황안송류홍', GIV=['민준','서윤','지호','하은','도현','수아','예준','지민','시우','채원','준서','다은','현우','소율','유진','태윤'];
 const ic=(id,st='')=>`<svg class="ico" ${st?`style="${st}"`:''}><use href="#${id}"/></svg>`;
 const md=t=>{const x=new Date(t);return (x.getMonth()+1)+'/'+x.getDate()};
+const iso=t=>{const x=new Date(t);return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0')};
+const D=v=>v?md(v+'T12:00'):'';
 
 function seed(){
-  const now=Date.now(), d=n=>now-n*864e5, dd=n=>md(now+n*864e5);
+  const now=Date.now(), d=n=>now-n*864e5, dd=n=>iso(now+n*864e5);
   let k=0; const wk=(back,first)=>{k++;return {name:FAM[(k*7)%FAM.length]+GIV[(k*5)%GIV.length],phone:'010-'+(2000+k*137)+'-'+(4100+k*251),first:dd(first),at:now-back*864e5}};
   const r=[
     {s:'s1',role:'홀 서빙',type:'파트타임',n:2,days:['토','일'],time:'11:00~16:00',pay:'시급 11,000원',start:dd(2),urgent:true,memo:'주말 점심 피크 인원 부족',at:d(0.2),st:'new',w:[]},
@@ -358,7 +368,7 @@ function seed(){
     {s:'s14',role:'물류·진열',type:'파트타임',n:1,days:['화','목'],time:'07:00~11:00',pay:'시급 11,000원',start:dd(5),urgent:false,memo:'',at:d(2.5),st:'new',w:[]},
     {s:'s31',role:'캐셔',type:'정규직',n:1,days:['수','목','금','토','일'],time:'13:00~22:00',pay:'월 235만 원',start:dd(12),urgent:false,memo:'',at:d(4),st:'hold',w:[],by:'박도윤',holdWhy:'매장 요청으로 미룸'},
     {s:'s1',role:'캐셔',type:'파트타임',n:1,days:['화','목'],time:'14:00~20:00',pay:'시급 10,500원',start:dd(-6),urgent:false,memo:'',at:d(16),st:'done',w:[wk(13,-6)],by:'이서연'},
-  ].map((x,i)=>({...x,id:'r'+(100+i),log:[{t:x.at,m:'매장이 요청을 보냈어요'}].concat(x.by?[{t:x.at+36e5*3,m:x.by+' 담당자가 맡았어요'}]:[]).concat(x.w.map(w=>({t:w.at,m:w.name+'님 채용 확정 · 첫 출근 '+w.first}))).concat(x.st==='hold'?[{t:x.at+864e5,m:'보류: '+x.holdWhy}]:[])}));
+  ].map((x,i)=>({...x,id:'r'+(100+i),log:[{t:x.at,m:'매장이 요청을 보냈어요'}].concat(x.by?[{t:x.at+36e5*3,m:x.by+' 담당자가 맡았어요'}]:[]).concat(x.w.map(w=>({t:w.at,m:w.name+'님 채용 확정 · 첫 출근 '+D(w.first)}))).concat(x.st==='hold'?[{t:x.at+864e5,m:'보류: '+x.holdWhy}]:[])}));
   return {reqs:r,noti:{s1:[{t:d(1.1),m:'물류·진열 요청을 박도윤 담당자가 맡았어요',r:'r103',unread:true},{t:d(2),m:'주방 보조 요청에 1명이 채용 확정됐어요',r:'r102',unread:true},{t:d(6)+36e5*3,m:'주방 보조 요청을 김하늘 담당자가 맡았어요',r:'r102'}]},seq:200};
 }
 let S; try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
@@ -366,12 +376,12 @@ if(!S||!S.reqs) S=seed();
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
 const $=s=>document.querySelector(s), esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const store=id=>STORES.find(s=>s.id===id)||{name:id,a:id};
-const ST={new:['접수','b-new'],ing:['채용 진행','b-ing'],part:['일부 충원','b-part'],done:['충원 완료','b-done'],hold:['보류','b-hold']};
+const ST={new:['접수','b-new'],ing:['채용 진행','b-ing'],part:['일부 충원','b-part'],done:['충원 완료','b-done'],hold:['보류','b-hold'],cancel:['요청 철회','b-hold']};
 const badge=st=>`<span class="badge ${ST[st][1]}">${ST[st][0]}</span>`;
 const ago=t=>{const m=Math.round((Date.now()-t)/6e4);if(m<1)return'방금';if(m<60)return m+'분 전';const h=Math.round(m/60);if(h<24)return h+'시간 전';return Math.round(h/24)+'일 전'};
 const mask=p=>p.replace(/^(\d{3})-(\d{4})-(\d{4})$/,'$1-****-$3');
 const pct=r=>Math.min(100,r.w.length/r.n*100);
-function autoStatus(r){if(r.st==='hold')return;const k=r.w.length;if(k>=r.n)r.st='done';else if(k>0)r.st='part';else r.st=r.by?'ing':'new'}
+function autoStatus(r){if(r.st==='hold'||r.st==='cancel')return;const k=r.w.length;if(k>=r.n)r.st='done';else if(k>0)r.st='part';else r.st=r.by?'ing':'new'}
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),2400)}
 function notify(s,m,rid){(S.noti[s]=S.noti[s]||[]).unshift({t:Date.now(),m,r:rid,unread:true})}
 
@@ -404,6 +414,7 @@ class App{
     E.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>this.go(b.dataset.tab));
     E.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>this.go(this.tab==='new'?'home':this.tab,b.dataset.open));
     E.querySelectorAll('[data-back]').forEach(b=>b.onclick=()=>this.go(this.open?this.tab:this.home==='new'?'home':this.home));
+    E.querySelectorAll('[data-withdraw]').forEach(b=>b.onclick=()=>openSheet(confirmSheet('요청을 철회할까요?','담당자 목록에 \'요청 철회\'로 바로 보여요.','철회하기',()=>{const r=S.reqs.find(x=>x.id===this.open);r.st='cancel';r.log.push({t:Date.now(),m:'매장이 요청을 철회했어요'});save();render();toast('요청을 철회했어요')})));
     E.querySelectorAll('[data-seg]').forEach(b=>b.onclick=()=>{this.seg=b.dataset.seg;this.render()});
     E.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{this.day=+b.dataset.day;this.render()});
     E.querySelectorAll('[data-wk]').forEach(b=>b.onclick=()=>{this.day+=(+b.dataset.wk)*7*864e5;this.pick=true;this.render()});
@@ -414,7 +425,7 @@ class App{
   }
   homeV(){
     const st=store(me), mine=S.reqs.filter(r=>r.s===me).sort((a,b)=>b.at-a.at);
-    const act=mine.filter(r=>r.st!=='done'), done=mine.filter(r=>r.st==='done');
+    const act=mine.filter(r=>r.st!=='done'&&r.st!=='cancel'), done=mine.filter(r=>r.st==='done');
     let list=this.seg==='act'?act:this.seg==='done'?done:act.filter(r=>r.urgent);
     if(this.q)list=list.filter(r=>(r.role+r.type+r.memo).includes(this.q));
     const need=act.filter(r=>r.st!=='hold').reduce((a,r)=>a+Math.max(0,r.n-r.w.length),0);
@@ -427,7 +438,7 @@ class App{
     <div class="hscroll">${list.length?list.map((r,i)=>`<button class="pcard ${['','c2','c3'][i%3]}" type="button" data-open="${r.id}">${r.urgent&&r.st!=='done'?'<span class="urg">급구</span>':''}
       <span class="hd"><span class="ci">${ic(RIC[r.role])}</span>${ST[r.st][0]}</span>
       <span class="tt">${esc(r.role)}<br>${r.n}명 구해요</span>
-      <span class="mm">시작 ${esc(r.start)} · ${r.w.length}/${r.n}명 충원</span>
+      <span class="mm">시작 ${esc(D(r.start))} · ${r.w.length}/${r.n}명 충원</span>
       <span class="pb"><i style="width:${pct(r)}%"></i></span></button>`).join(''):`<div class="lcard"><span class="s">${this.q?'검색 결과가 없어요':'해당하는 요청이 없어요'}</span></div>`}</div>
     <div class="sec"><h3>빠르게 요청하기</h3></div>
     <div class="ochips">${ROLES.map(r=>`<button class="oc" type="button" data-quick="${r}">${r}</button>`).join('')}</div>
@@ -436,19 +447,19 @@ class App{
   }
   cal(){
     const mine=S.reqs.filter(r=>r.s===me);
-    const ev=t=>{const k=md(t);const a=[];mine.forEach(r=>{if(r.st!=='done'&&r.st!=='hold'&&r.start===k)a.push({type:'start',r});r.w.forEach(w=>{if(w.first===k)a.push({type:'first',r,w})})});return a};
+    const ev=t=>{const k=iso(t);const a=[];mine.forEach(r=>{if(!['done','hold','cancel'].includes(r.st)&&r.start===k)a.push({type:'start',r});r.w.forEach(w=>{if(w.first===k)a.push({type:'first',r,w})})});return a};
     const today=new Date();today.setHours(12,0,0,0);
     if(this.day==null){this.day=today.getTime();for(let i=0;i<42;i++){const t=today.getTime()+i*864e5;if(ev(t).length){this.day=t;break}}}
     const base=new Date(this.day); base.setHours(12,0,0,0); const sun=base.getTime()-base.getDay()*864e5;
     if(this.pick){this.pick=false;for(let i=0;i<7;i++){const t=sun+i*864e5;if(ev(t).length){this.day=t;break}}}
     const sd=new Date(this.day), y=sd.getFullYear(), mo=sd.getMonth()+1;
     const days=[...Array(7)].map((_,i)=>sun+i*864e5);
-    const selKey=md(this.day), E=ev(this.day);
+    const selKey=iso(this.day), E=ev(this.day);
     return `<div class="topline"><button class="iconbtn" type="button" data-tab="home" aria-label="홈으로">${ic('i-back')}</button><button class="iconbtn" type="button" data-tab="new" aria-label="새 요청">${ic('i-plus')}</button></div>
     <div class="row" style="justify-content:space-between;margin-bottom:18px"><h1 class="big">${y}년 ${mo}월</h1><span class="pinkbox">${ic('i-cal')}</span></div>
     <div class="row" style="justify-content:space-between;margin:-6px 0 10px"><button class="iconbtn" type="button" data-wk="-1" aria-label="지난주">${ic('i-back')}</button><span class="sub">${md(sun)} ~ ${md(sun+6*864e5)}</span><button class="iconbtn" type="button" data-wk="1" aria-label="다음 주" style="transform:scaleX(-1)">${ic('i-back')}</button></div>
-    <div class="week" role="group" aria-label="일주일 날짜">${days.map(t=>{const x=new Date(t);return `<button type="button" data-day="${t}" aria-pressed="${md(t)===selKey}"><span>${WD[x.getDay()]}</span><b>${x.getDate()}</b>${ev(t).length?'<span class="has"></span>':''}</button>`}).join('')}</div>
-    <div class="sec"><h3>${selKey} 일정</h3><span class="sub">${E.length}건</span></div>
+    <div class="week" role="group" aria-label="일주일 날짜">${days.map(t=>{const x=new Date(t);return `<button type="button" data-day="${t}" aria-pressed="${iso(t)===selKey}"><span>${WD[x.getDay()]}</span><b>${x.getDate()}</b>${ev(t).length?'<span class="has"></span>':''}</button>`}).join('')}</div>
+    <div class="sec"><h3>${md(this.day)} 일정</h3><span class="sub">${E.length}건</span></div>
     <div class="stack">${E.length?E.map((e,i)=>e.type==='first'?`<button class="lcard ${i===0?'lift':''}" type="button" data-open="${e.r.id}"><span class="ib pk">${ic('i-user')}</span><span class="sp"><b>${esc(e.w.name)}님 첫 출근</b><span class="s">${esc(e.r.role)} · ${esc(e.r.time)}</span></span>${ic('i-check','color:var(--ok-dot)')}</button>`:`<button class="lcard ${i===0?'lift':''}" type="button" data-open="${e.r.id}"><span class="ib pk">${ic(RIC[e.r.role])}</span><span class="sp"><b>${esc(e.r.role)} 근무 시작 희망</b><span class="s">${esc(e.r.time)} · ${e.r.w.length}/${e.r.n}명 충원</span></span>${badge(e.r.st)}</button>`).join(''):`<div class="lcard"><span class="ib">${ic('i-cal')}</span><span class="sp"><b>이날은 일정이 없어요</b><span class="s">분홍 점이 있는 날을 눌러 보세요</span></span></div>`}</div>
     <div class="sec"><h3>이 주 한눈에</h3></div>
     <div class="stack">${days.flatMap(t=>ev(t).map(e=>({t,e}))).slice(0,4).map(({t,e})=>`<button class="lcard" type="button" data-open="${e.r.id}"><span class="ib">${ic(e.type==='first'?'i-user':RIC[e.r.role])}</span><span class="sp"><b>${md(t)} · ${e.type==='first'?esc(e.w.name)+'님 첫 출근':esc(e.r.role)+' 시작 희망'}</b><span class="s">${esc(e.r.time)}</span></span></button>`).join('')||'<p class="empty">이 주에는 일정이 없어요. 화살표로 다음 주를 볼 수 있어요</p>'}</div>`;
@@ -464,7 +475,7 @@ class App{
       <span class="lbl">근무 형태</span><div class="ochips">${o(TYPES,'type')}</div><p class="err" data-e="type" hidden>근무 형태를 골라 주세요</p>
       <div class="row" style="margin-top:18px"><span class="lbl" style="margin:0">필요 인원</span><span class="sp"></span><div class="stepper"><button type="button" data-step="-1" aria-label="한 명 줄이기">−</button><output class="nOut">${F.n}명</output><button type="button" data-step="1" aria-label="한 명 늘리기">+</button></div></div>
       <span class="lbl">근무 요일</span><div class="days">${DAYS.map(d=>`<button type="button" class="oc" data-dd="${d}" aria-pressed="${F.days.includes(d)}">${d}</button>`).join('')}</div><p class="err" data-e="days" hidden>요일을 하나 이상 골라 주세요</p>
-      <div class="grid2" style="margin-top:14px"><label class="uf"><span>시작 시간</span><input type="time" name="t1" value="${F.t1}"></label><label class="uf"><span>끝 시간</span><input type="time" name="t2" value="${F.t2}"></label></div><p class="err" data-e="time" hidden>근무 시간을 넣어 주세요</p>
+      <div class="grid2" style="margin-top:14px"><label class="uf"><span>시작 시간</span><input type="time" name="t1" value="${F.t1}"></label><label class="uf"><span>끝 시간</span><input type="time" name="t2" value="${F.t2}"></label></div><p class="err" data-e="time" hidden>근무 시간을 넣어 주세요</p><p class="sub" style="font-size:12px;margin-top:4px">끝 시간이 더 이르면 야간 근무(다음날 끝남)로 저장돼요</p>
       <label class="uf" style="margin-top:10px"><span>급여</span><input name="pay" placeholder="예: 시급 11,000원" value="${esc(F.pay)}"></label><p class="err" data-e="pay" hidden>급여를 적어 주세요</p>
       <label class="uf" style="margin-top:10px"><span>근무 시작 희망일</span><input type="date" name="start" min="${new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10)}" value="${F.start}"></label><p class="err" data-e="start" hidden>시작 희망일을 골라 주세요</p>
       <label class="uf" style="margin-top:10px"><span>메모 (선택)</span><textarea name="memo" placeholder="예: 주말 점심 피크 시간 인원 부족">${esc(F.memo)}</textarea></label>
@@ -479,10 +490,10 @@ class App{
     f.querySelectorAll('[data-step]').forEach(b=>b.onclick=()=>{F.n=Math.max(1,Math.min(20,F.n+ +b.dataset.step));f.querySelector('.nOut').textContent=F.n+'명'});
     f.oninput=()=>{F.t1=f.t1.value;F.t2=f.t2.value;F.pay=f.pay.value;F.start=f.start.value;F.urgent=f.urgent.checked;F.memo=f.memo.value};
     f.onsubmit=e=>{e.preventDefault();f.oninput();
-      const bad={role:!F.role,type:!F.type,days:!F.days.length,time:!F.t1||!F.t2||F.t2<=F.t1,pay:!F.pay.trim(),start:!F.start};f.querySelector('[data-e="time"]').textContent=F.t1&&F.t2&&F.t2<=F.t1?'끝 시간이 시작 시간보다 늦어야 해요':'근무 시간을 넣어 주세요';
+      const bad={role:!F.role,type:!F.type,days:!F.days.length,time:!F.t1||!F.t2||F.t2===F.t1,pay:!F.pay.trim(),start:!F.start};f.querySelector('[data-e="time"]').textContent=F.t1&&F.t2&&F.t2===F.t1?'시작과 끝 시간이 같아요':'근무 시간을 넣어 주세요';
       let first=null;Object.entries(bad).forEach(([k,v])=>{const el=f.querySelector(`[data-e="${k}"]`);el.hidden=!v;if(v&&!first)first=el});
       if(first){const bd=f.closest('.body');if(!isMobile()&&bd){bd.scrollTo({top:bd.scrollTop+first.getBoundingClientRect().top-bd.getBoundingClientRect().top-140,behavior:'smooth'})}else first.scrollIntoView({block:'center',behavior:'smooth'});return}
-      const r={id:'r'+(++S.seq),s:me,role:F.role,type:F.type,n:F.n,days:F.days,time:F.t1+'~'+F.t2,pay:F.pay.trim(),start:md(new Date(F.start+'T12:00')),urgent:F.urgent,memo:F.memo.trim(),at:Date.now(),st:'new',w:[],log:[{t:Date.now(),m:'매장이 요청을 보냈어요'}]};
+      const r={id:'r'+(++S.seq),s:me,role:F.role,type:F.type,n:F.n,days:F.days,time:F.t1+'~'+F.t2+(F.t2<F.t1?'(다음날)':''),pay:F.pay.trim(),start:F.start,urgent:F.urgent,memo:F.memo.trim(),at:Date.now(),st:'new',w:[],log:[{t:Date.now(),m:'매장이 요청을 보냈어요'}]};
       S.reqs.unshift(r);save();this.F=null;
       const homeApp=apps.find(a=>a.home==='home'&&getComputedStyle(a.el).display!=='none');
       if(this.home==='new'&&homeApp&&!isMobile()){this.render();homeApp.seg='act';homeApp.go('home',r.id)}else{this.seg='act';this.go('home',r.id)}
@@ -501,14 +512,15 @@ class App{
     return `<div class="topline"><button class="iconbtn" type="button" data-back aria-label="뒤로">${ic('i-back')}</button>${badge(r.st)}</div>
     <div class="row" style="justify-content:space-between;align-items:flex-start"><div><p class="sub">${esc(store(r.s).name)} · #${r.id.slice(1)}</p><h1 class="big">${esc(r.role)} ${r.n}명</h1></div><span class="pinkbox">${ic(RIC[r.role])}</span></div>
     <div class="dfacts" style="margin-top:14px">
-      <div class="uf"><span>근무 형태</span><b>${esc(r.type)}</b></div><div class="uf"><span>시작 희망</span><b>${esc(r.start)}</b></div>
+      <div class="uf"><span>근무 형태</span><b>${esc(r.type)}</b></div><div class="uf"><span>시작 희망</span><b>${esc(D(r.start))}</b></div>
       <div class="uf"><span>요일</span><b>${r.days.join('·')}</b></div><div class="uf"><span>시간</span><b>${esc(r.time)}</b></div>
       <div class="uf"><span>급여</span><b>${esc(r.pay)}</b></div><div class="uf"><span>담당자</span><b>${r.by?esc(r.by):'배정 전'}</b></div>
     </div>
     ${r.memo?`<div class="uf"><span>메모</span><b style="font-weight:500">${esc(r.memo)}</b></div>`:''}
     <div class="prog"><div class="row"><b style="font-size:14px">충원 현황</b><span class="sp"></span><b class="num" style="color:var(--indigo)">${r.w.length}/${r.n}명</b></div><div class="bar ${r.st==='done'?'done':''}"><i style="width:${pct(r)}%"></i></div></div>
+    ${['new','ing'].includes(r.st)&&!r.w.length?`<button class="btn btn-l" type="button" data-withdraw style="margin-top:12px;width:100%;justify-content:center;height:44px">이 요청 철회하기</button>`:''}
     <div class="sec"><h3>채용 확정된 분</h3></div>
-    <div class="stack">${r.w.length?r.w.map(w=>`<div class="lcard"><span class="ib pk"><b style="font-size:15px">${esc(w.name[0])}</b></span><span class="sp"><b>${esc(w.name)}</b><span class="s">${mask(w.phone)} · 첫 출근 ${esc(w.first)}</span></span>${ic('i-check','color:var(--ok-dot)')}</div>`).join(''):'<div class="lcard"><span class="sp s" style="text-align:center">아직 확정된 분이 없어요. 확정되면 알림으로 알려 드려요.</span></div>'}</div>
+    <div class="stack">${r.w.length?r.w.map(w=>`<div class="lcard"><span class="ib pk"><b style="font-size:15px">${esc(w.name[0])}</b></span><span class="sp"><b>${esc(w.name)}</b><span class="s">${mask(w.phone)} · 첫 출근 ${esc(D(w.first))}</span></span>${ic('i-check','color:var(--ok-dot)')}</div>`).join(''):'<div class="lcard"><span class="sp s" style="text-align:center">아직 확정된 분이 없어요. 확정되면 알림으로 알려 드려요.</span></div>'}</div>
     <div class="sec"><h3>진행 기록</h3></div>
     <ul class="tl">${log.map(l=>`<li>${esc(l.m)}<div class="w">${ago(l.t)}</div></li>`).join('')}</ul>`;
   }
@@ -517,7 +529,7 @@ const apps=[...document.querySelectorAll('[data-app]')].map(el=>new App(el,el.da
 function renderStore(){apps.forEach(a=>a.render())}
 
 function renderAdmin(){
-  const R=S.reqs, act=R.filter(r=>r.st!=='done'&&r.st!=='hold');
+  const R=S.reqs, act=R.filter(r=>!['done','hold','cancel'].includes(r.st));
   const need=act.reduce((a,r)=>a+Math.max(0,r.n-r.w.length),0);
   const wk=Date.now()-7*864e5, filled=R.reduce((a,r)=>a+r.w.filter(w=>w.at>wk).length,0);
   const urg=act.filter(r=>r.urgent).length, newc=R.filter(r=>r.st==='new').length;
@@ -535,7 +547,7 @@ function renderAdmin(){
     <td><div class="row"><span class="pinkbox" style="width:34px;height:34px;border-radius:11px">${ic(RIC[r.role],'width:17px;height:17px')}</span><b>${esc(store(r.s).a)}점</b>${r.urgent&&r.st!=='done'?'<span class="tag-u">급구</span>':''}</div></td>
     <td>${esc(r.role)}<div class="sub rsub" style="font-size:12px">${esc(r.type)}</div></td>
     <td class="hide-m">${r.days.join('')}<div class="sub" style="font-size:12px">${esc(r.time)}</div></td>
-    <td class="num"><b>${r.w.length}</b>/${r.n}</td><td>${badge(r.st)}</td><td class="hide-m sub">${ago(r.at)}</td></tr>`).join(''):`<tr><td colspan="6" class="empty">조건에 맞는 요청이 없어요</td></tr>`;
+    <td class="num"><b>${r.w.length}</b>/${r.n}</td><td>${badge(r.st)}</td><td class="hide-m">${esc(D(r.start))}</td><td class="hide-m">${r.by?esc(r.by):'<span style="color:var(--pink);font-weight:700">미배정</span>'}</td><td class="hide-m sub">${ago(r.at)}</td></tr>`).join(''):`<tr><td colspan="8" class="empty">조건에 맞는 요청이 없어요</td></tr>`;
   $('#rows').querySelectorAll('tr[data-id]').forEach(tr=>{tr.onclick=()=>{sel=tr.dataset.id;renderAdmin();if(innerWidth<=1100)$('#panel').scrollIntoView({behavior:'smooth',block:'start'})};tr.onkeydown=e=>{if(e.key==='Enter')tr.onclick()}});
   panel();
 }
@@ -553,7 +565,7 @@ function panel(){
   <div class="row" style="justify-content:space-between;align-items:flex-start"><div><p class="sub">${esc(store(r.s).name)} · #${r.id.slice(1)}</p><h3 class="big" style="font-size:24px">${esc(r.role)} ${r.n}명</h3></div><span class="pinkbox">${ic(RIC[r.role])}</span></div>
   <div class="row" style="margin-top:6px">${badge(r.st)}${r.urgent&&r.st!=='done'?'<span class="tag-u">급구</span>':''}</div>
   <div class="dfacts" style="margin-top:8px">
-    <div class="uf"><span>근무</span><b>${esc(r.type)}</b></div><div class="uf"><span>시작 희망</span><b>${esc(r.start)}</b></div>
+    <div class="uf"><span>근무</span><b>${esc(r.type)}</b></div><div class="uf"><span>시작 희망</span><b>${esc(D(r.start))}</b></div>
     <div class="uf"><span>요일·시간</span><b>${r.days.join('')} ${esc(r.time)}</b></div><div class="uf"><span>급여</span><b>${esc(r.pay)}</b></div>
   </div>
   ${r.memo?`<div class="uf"><span>매장 메모</span><b style="font-weight:500">${esc(r.memo)}</b></div>`:''}
@@ -561,12 +573,12 @@ function panel(){
   <div class="row" style="margin-top:14px;flex-wrap:wrap">
     ${!r.by?`<button class="btn btn-i" type="button" data-act="take">내가 맡기</button>`:`<span class="avatar" style="width:32px;height:32px;font-size:12px">${esc(r.by[0])}</span><span class="sub">담당 <b style="color:var(--ink)">${esc(r.by)}</b></span>`}
     <span class="sp"></span>
-    ${r.st!=='hold'&&r.st!=='done'?`<button class="btn btn-l" type="button" data-act="hold">보류</button>`:''}
+    ${!['hold','done','cancel'].includes(r.st)?`<button class="btn btn-l" type="button" data-act="hold">보류</button>`:''}
     ${r.st==='hold'?`<button class="btn btn-l" type="button" data-act="resume">다시 진행</button>`:''}
   </div>
   <div class="sec"><h3>채용 확정자</h3></div>
-  <div class="stack">${r.w.length?r.w.map((w,i)=>`<div class="lcard"><span class="ib pk"><b style="font-size:15px">${esc(w.name[0])}</b></span><span class="sp"><b>${esc(w.name)}</b><span class="s">${esc(w.phone)} · 첫 출근 ${esc(w.first)}</span></span><button class="btn" style="background:#fff;height:34px" type="button" data-del="${i}" aria-label="${esc(w.name)} 확정 취소">취소</button></div>`).join(''):'<p class="sub">아직 없어요. 채용은 앱 밖에서 진행하고, 확정되면 넣어 주세요.</p>'}</div>
-  ${r.w.length<r.n&&r.st!=='hold'?`<button class="mainbtn" type="button" data-act="add" style="width:100%">채용 확정자 넣기</button>`:''}
+  <div class="stack">${r.w.length?r.w.map((w,i)=>`<div class="lcard"><span class="ib pk"><b style="font-size:15px">${esc(w.name[0])}</b></span><span class="sp"><b>${esc(w.name)}</b><span class="s">${esc(w.phone)} · 첫 출근 ${esc(D(w.first))}</span></span><button class="btn" style="background:#fff;height:34px" type="button" data-del="${i}" aria-label="${esc(w.name)} 확정 취소">취소</button></div>`).join(''):'<p class="sub">아직 없어요. 채용은 앱 밖에서 진행하고, 확정되면 넣어 주세요.</p>'}</div>
+  ${r.w.length<r.n&&!['hold','cancel'].includes(r.st)?`<button class="mainbtn" type="button" data-act="add" style="width:100%">채용 확정자 넣기</button>`:''}
   <div class="sec"><h3>진행 기록</h3></div>
   <ul class="tl">${log.map(l=>`<li>${esc(l.m)}<div class="w">${ago(l.t)}</div></li>`).join('')}</ul>`;
   P.querySelector('[data-tolist]').onclick=()=>document.querySelector('.list-card').scrollIntoView({behavior:'smooth',block:'start'});
@@ -577,7 +589,7 @@ function panel(){
     if(a==='resume'){r.st='ing';autoStatus(r);r.log.push({t:Date.now(),m:'다시 진행해요'});notify(r.s,`${r.role} 요청을 다시 진행해요`,r.id);save();renderAdmin()}
     if(a==='add')openSheet(addSheet(r));
   });
-  P.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{const w=r.w.splice(+b.dataset.del,1)[0];r.log.push({t:Date.now(),m:w.name+'님 확정 취소'});autoStatus(r);notify(r.s,`${r.role} 요청의 확정자 1명이 취소됐어요`,r.id);save();renderAdmin();toast('확정을 취소했어요')});
+  P.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>openSheet(confirmSheet(`${esc(r.w[+b.dataset.del].name)}님 확정을 취소할까요?`,'매장 화면의 충원 현황과 일정에서도 빠지고, 매장에 알림이 가요.','확정 취소',()=>{const w=r.w.splice(+b.dataset.del,1)[0];r.log.push({t:Date.now(),m:w.name+'님 확정 취소'});autoStatus(r);notify(r.s,`${r.role} 요청의 확정자 1명이 취소됐어요`,r.id);save();renderAdmin();toast('확정을 취소했어요')})));
 }
 function addSheet(r){
   return {html:`<div class="row" style="justify-content:space-between"><h2 class="big" id="sheetTitle" style="font-size:24px">채용 확정</h2><span class="pinkbox">${ic('i-user')}</span></div><p class="sub" style="margin:4px 0 10px">${esc(store(r.s).name)} · ${esc(r.role)} (${r.w.length}/${r.n}명)</p>
@@ -592,9 +604,11 @@ function addSheet(r){
     f.phone.oninput=()=>{let d=f.phone.value.replace(/\D/g,'').slice(0,11);f.phone.value=d.length>7?d.replace(/(\d{3})(\d{4})(\d+)/,'$1-$2-$3'):d.length>3?d.replace(/(\d{3})(\d+)/,'$1-$2'):d};
     f.onsubmit=e=>{e.preventDefault();const n=f.name.value.trim(),p=f.phone.value,d=f.first.value,er=$('#wfErr'),okp=/^010-\d{4}-\d{4}$/.test(p);
       if(!n||!okp||!d){er.hidden=false;er.textContent=!n?'이름을 넣어 주세요':!okp?'연락처를 010-0000-0000 형식으로 넣어 주세요':'첫 출근일을 골라 주세요';return}
-      const first=md(new Date(d+'T12:00'));
-      r.w.push({name:n,phone:p,first,at:Date.now()});if(!r.by)r.by=$('#adminName').textContent;autoStatus(r);
-      r.log.push({t:Date.now(),m:`${n}님 채용 확정 · 첫 출근 ${first}`});
+      const first=d;
+      if(r.w.some(w=>w.phone===p)){er.hidden=false;er.textContent='이 요청에 같은 연락처로 이미 확정된 분이 있어요';return}
+      if(!r.by){r.by=$('#adminName').textContent;r.log.push({t:Date.now()-1,m:r.by+' 담당자가 맡았어요'})}
+      r.w.push({name:n,phone:p,first,at:Date.now()});autoStatus(r);
+      r.log.push({t:Date.now(),m:`${n}님 채용 확정 · 첫 출근 ${D(first)}`});
       notify(r.s,`${r.role} 요청에 1명이 채용 확정됐어요 (${r.w.length}/${r.n}명)`,r.id);
       save();closeSheet();renderAdmin();toast(r.st==='done'?'충원 완료! 매장에 알림을 보냈어요':'확정했어요. 매장 앱 충원 현황과 일정이 바로 바뀌어요')}}};
 }
@@ -605,13 +619,14 @@ function holdSheet(r){
   bind:()=>{let why='';const f=$('#hf');f.querySelectorAll('.oc').forEach(b=>b.onclick=()=>{why=b.dataset.v;f.querySelectorAll('.oc').forEach(x=>x.setAttribute('aria-pressed',x===b));f.querySelector('[type=submit]').disabled=false});
     f.onsubmit=e=>{e.preventDefault();r.st='hold';r.log.push({t:Date.now(),m:'보류: '+why});notify(r.s,`${r.role} 요청이 보류됐어요 (${why})`,r.id);save();closeSheet();renderAdmin();toast('보류했어요')}}};
 }
+function confirmSheet(title,desc,ok,fn){return {html:`<h2 class="big" id="sheetTitle" style="font-size:22px">${title}</h2><p class="sub" style="margin:6px 0 20px;font-size:14px">${desc}</p><div class="grid2"><button class="btn btn-l" type="button" data-close style="justify-content:center;height:48px">아니요</button><button class="btn btn-i" type="button" data-ok style="justify-content:center;height:48px">${ok}</button></div>`,bind:()=>{$('#sheet [data-ok]').onclick=()=>{closeSheet();fn()}}}}
 let lastFocus;
 function openSheet(s){lastFocus=document.activeElement;$('#sheet').innerHTML=s.html;$('#sheetBg').classList.add('on');s.bind();$('#sheet').querySelectorAll('[data-close]').forEach(b=>b.onclick=closeSheet)}
 function closeSheet(){$('#sheetBg').classList.remove('on');lastFocus?.focus?.()}
 $('#sheetBg').onclick=e=>{if(e.target.id==='sheetBg')closeSheet()};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
 
-document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{role=b.dataset.role;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#storeView').hidden=role!=='store';$('#adminView').hidden=role!=='admin';render();window.scrollTo(0,0)});
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{role=b.dataset.role;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#storeView').hidden=role!=='store';$('#adminView').hidden=role!=='admin';document.body.classList.toggle('is-admin',role==='admin');render();window.scrollTo(0,0)});
 $('#storeSel').innerHTML=STORES.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
 $('#storeSel').onchange=e=>{me=e.target.value;apps.forEach(a=>{a.open=null;a.F=null;a.tab=a.home});render()};
 $('#resetBtn').onclick=()=>{try{localStorage.removeItem(KEY)}catch(e){};S=seed();sel=null;apps.forEach(a=>{a.open=null;a.F=null;a.tab=a.home;a.seg='act';a.q='';a.day=null});render();toast('처음 상태로 되돌렸어요')};
